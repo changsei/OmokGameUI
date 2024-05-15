@@ -1,6 +1,6 @@
 ﻿namespace Game_Client_Forms
 {
-    partial class UserIDInfoForm
+    partial class UserIdInfoForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             btnBackHome = new Button();
-            btnBackward = new Button();
             pnlLogo = new Panel();
             lblUserInfoHeader = new Label();
             lblVersion = new Label();
@@ -39,21 +38,13 @@
             // 
             // btnBackHome
             // 
-            btnBackHome.Location = new Point(94, 488);
+            btnBackHome.Location = new Point(94, 448);
             btnBackHome.Name = "btnBackHome";
             btnBackHome.Size = new Size(290, 38);
             btnBackHome.TabIndex = 61;
             btnBackHome.Text = "로그인 화면으로";
             btnBackHome.UseVisualStyleBackColor = true;
-            // 
-            // btnBackward
-            // 
-            btnBackward.Location = new Point(94, 444);
-            btnBackward.Name = "btnBackward";
-            btnBackward.Size = new Size(290, 38);
-            btnBackward.TabIndex = 60;
-            btnBackward.Text = "뒤로 가기";
-            btnBackward.UseVisualStyleBackColor = true;
+            btnBackHome.Click += btnBackHome_Click;
             // 
             // pnlLogo
             // 
@@ -103,7 +94,7 @@
             lblUserInfoTail.TabIndex = 63;
             lblUserInfoTail.Text = "입니다.";
             // 
-            // UserIDInfoForm
+            // UserIdInfoForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -112,12 +103,11 @@
             Controls.Add(lblUserInfoTail);
             Controls.Add(lblUserIdInfo);
             Controls.Add(btnBackHome);
-            Controls.Add(btnBackward);
             Controls.Add(pnlLogo);
             Controls.Add(lblUserInfoHeader);
             Controls.Add(lblVersion);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "UserIDInfoForm";
+            Name = "UserIdInfoForm";
             Text = "UserIDInfoForm";
             ResumeLayout(false);
             PerformLayout();
@@ -126,7 +116,6 @@
         #endregion
 
         private Button btnBackHome;
-        private Button btnBackward;
         private Panel pnlLogo;
         private Label lblUserInfoHeader;
         private Label lblVersion;

@@ -126,6 +126,7 @@
             btnBackHome.TabIndex = 19;
             btnBackHome.Text = "로그인 화면으로";
             btnBackHome.UseVisualStyleBackColor = true;
+            btnBackHome.Click += btnBackHome_Click;
             // 
             // btnSearchUserInfo
             // 

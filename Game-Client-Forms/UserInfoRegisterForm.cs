@@ -14,11 +14,9 @@ namespace Game_Client_Forms
 {
     public partial class UserInfoRegisterForm : Form
     {
-        private Form _loginForm;
         private Client _client;
         public UserInfoRegisterForm()
         {
-            _loginForm = LoginForm.Instance;
             _client = Client.Instance;
             InitializeComponent();
         }

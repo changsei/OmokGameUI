@@ -23,5 +23,10 @@ namespace Game_Client_Forms
         {
             // 사용자 정보 요청
         }
+
+        private void btnBackHome_Click(object sender, EventArgs e)
+        {
+            _client.DisConnectToServer();
+        }
     }
 }

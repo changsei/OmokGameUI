@@ -32,7 +32,7 @@
             tBoxUserPhoneNumber = new TextBox();
             lblVersion = new Label();
             btnSeachUserPassword = new Button();
-            tBoxUserPassword = new TextBox();
+            tBoxUserId = new TextBox();
             lblGuide = new Label();
             btnSearchUserId = new Button();
             btnBackward = new Button();
@@ -71,13 +71,14 @@
             btnSeachUserPassword.TabIndex = 32;
             btnSeachUserPassword.Text = "PW 찾기";
             btnSeachUserPassword.UseVisualStyleBackColor = true;
+            btnSeachUserPassword.Click += btnSeachUserPassword_Click;
             // 
-            // tBoxUserPassword
+            // tBoxUserId
             // 
-            tBoxUserPassword.Location = new Point(94, 299);
-            tBoxUserPassword.Name = "tBoxUserPassword";
-            tBoxUserPassword.Size = new Size(290, 31);
-            tBoxUserPassword.TabIndex = 31;
+            tBoxUserId.Location = new Point(94, 299);
+            tBoxUserId.Name = "tBoxUserId";
+            tBoxUserId.Size = new Size(290, 31);
+            tBoxUserId.TabIndex = 31;
             // 
             // lblGuide
             // 
@@ -85,9 +86,9 @@
             lblGuide.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point, 129);
             lblGuide.Location = new Point(94, 389);
             lblGuide.Name = "lblGuide";
-            lblGuide.Size = new Size(262, 25);
+            lblGuide.Size = new Size(304, 25);
             lblGuide.TabIndex = 36;
-            lblGuide.Text = "원하시는 버튼을 클릭해주세요.";
+            lblGuide.Text = "비밀번호 찾기는 계정이 필요합니다.";
             // 
             // btnSearchUserId
             // 
@@ -97,6 +98,7 @@
             btnSearchUserId.TabIndex = 38;
             btnSearchUserId.Text = "ID 찾기";
             btnSearchUserId.UseVisualStyleBackColor = true;
+            btnSearchUserId.Click += btnSearchUserId_Click;
             // 
             // btnBackward
             // 
@@ -106,6 +108,7 @@
             btnBackward.TabIndex = 51;
             btnBackward.Text = "뒤로 가기";
             btnBackward.UseVisualStyleBackColor = true;
+            btnBackward.Click += btnBackward_Click;
             // 
             // UserInfoForm
             // 
@@ -120,7 +123,7 @@
             Controls.Add(tBoxUserPhoneNumber);
             Controls.Add(lblVersion);
             Controls.Add(btnSeachUserPassword);
-            Controls.Add(tBoxUserPassword);
+            Controls.Add(tBoxUserId);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "UserInfoForm";
             Text = "UserInfoForm";
@@ -135,7 +138,7 @@
         private TextBox tBoxUserPhoneNumber;
         private Label lblVersion;
         private Button btnSeachUserPassword;
-        private TextBox tBoxUserPassword;
+        private TextBox tBoxUserId;
         private Label lblGuide;
         private Button btnSearchUserId;
         private Button btnBackward;

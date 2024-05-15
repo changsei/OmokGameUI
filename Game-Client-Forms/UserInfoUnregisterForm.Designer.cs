@@ -30,7 +30,7 @@
         {
             btnBackHome = new Button();
             btnUnregister = new Button();
-            tboxUserPassword = new TextBox();
+            tBoxUserPassword = new TextBox();
             tBoxUserId = new TextBox();
             pnlLogo = new Panel();
             lblGuide = new Label();
@@ -45,6 +45,7 @@
             btnBackHome.TabIndex = 61;
             btnBackHome.Text = "로그인 화면으로";
             btnBackHome.UseVisualStyleBackColor = true;
+            btnBackHome.Click += btnBackHome_Click;
             // 
             // btnUnregister
             // 
@@ -54,13 +55,14 @@
             btnUnregister.TabIndex = 59;
             btnUnregister.Text = "회원 탈퇴";
             btnUnregister.UseVisualStyleBackColor = true;
+            btnUnregister.Click += btnUnregister_Click;
             // 
-            // tboxUserPassword
+            // tBoxUserPassword
             // 
-            tboxUserPassword.Location = new Point(86, 351);
-            tboxUserPassword.Name = "tboxUserPassword";
-            tboxUserPassword.Size = new Size(290, 31);
-            tboxUserPassword.TabIndex = 58;
+            tBoxUserPassword.Location = new Point(86, 342);
+            tBoxUserPassword.Name = "tBoxUserPassword";
+            tBoxUserPassword.Size = new Size(290, 31);
+            tBoxUserPassword.TabIndex = 58;
             // 
             // tBoxUserId
             // 
@@ -105,7 +107,7 @@
             ClientSize = new Size(458, 664);
             Controls.Add(btnBackHome);
             Controls.Add(btnUnregister);
-            Controls.Add(tboxUserPassword);
+            Controls.Add(tBoxUserPassword);
             Controls.Add(tBoxUserId);
             Controls.Add(pnlLogo);
             Controls.Add(lblGuide);
@@ -123,7 +125,7 @@
         private Button btnBackHome;
         private Button btnBackward;
         private Button btnUnregister;
-        private TextBox tboxUserPassword;
+        private TextBox tBoxUserPassword;
         private TextBox tBoxUserId;
         private Panel pnlLogo;
         private Label lblGuide;

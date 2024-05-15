@@ -34,7 +34,6 @@
             tboxConfirmUserPassword = new TextBox();
             tBoxUserPassword = new TextBox();
             btnRegisterPassword = new Button();
-            btnBackward = new Button();
             btnBackHome = new Button();
             SuspendLayout();
             // 
@@ -50,7 +49,7 @@
             // 
             lblGuide.AutoSize = true;
             lblGuide.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            lblGuide.Location = new Point(94, 543);
+            lblGuide.Location = new Point(94, 530);
             lblGuide.Name = "lblGuide";
             lblGuide.Size = new Size(262, 25);
             lblGuide.TabIndex = 45;
@@ -68,7 +67,7 @@
             // 
             // tboxConfirmUserPassword
             // 
-            tboxConfirmUserPassword.Location = new Point(94, 355);
+            tboxConfirmUserPassword.Location = new Point(94, 346);
             tboxConfirmUserPassword.Name = "tboxConfirmUserPassword";
             tboxConfirmUserPassword.Size = new Size(290, 31);
             tboxConfirmUserPassword.TabIndex = 48;
@@ -84,30 +83,23 @@
             // 
             // btnRegisterPassword
             // 
-            btnRegisterPassword.Location = new Point(94, 406);
+            btnRegisterPassword.Location = new Point(94, 445);
             btnRegisterPassword.Name = "btnRegisterPassword";
             btnRegisterPassword.Size = new Size(290, 38);
             btnRegisterPassword.TabIndex = 49;
             btnRegisterPassword.Text = "PW 설정";
             btnRegisterPassword.UseVisualStyleBackColor = true;
-            // 
-            // btnBackward
-            // 
-            btnBackward.Location = new Point(94, 450);
-            btnBackward.Name = "btnBackward";
-            btnBackward.Size = new Size(290, 38);
-            btnBackward.TabIndex = 50;
-            btnBackward.Text = "뒤로 가기";
-            btnBackward.UseVisualStyleBackColor = true;
+            btnRegisterPassword.Click += btnRegisterPassword_Click;
             // 
             // btnBackHome
             // 
-            btnBackHome.Location = new Point(94, 494);
+            btnBackHome.Location = new Point(94, 489);
             btnBackHome.Name = "btnBackHome";
             btnBackHome.Size = new Size(290, 38);
             btnBackHome.TabIndex = 51;
             btnBackHome.Text = "로그인 화면으로";
             btnBackHome.UseVisualStyleBackColor = true;
+            btnBackHome.Click += btnBackHome_Click;
             // 
             // UserPasswordSettingForm
             // 
@@ -116,7 +108,6 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(458, 664);
             Controls.Add(btnBackHome);
-            Controls.Add(btnBackward);
             Controls.Add(btnRegisterPassword);
             Controls.Add(tboxConfirmUserPassword);
             Controls.Add(tBoxUserPassword);
@@ -137,7 +128,6 @@
         private TextBox tboxConfirmUserPassword;
         private TextBox tBoxUserPassword;
         private Button btnRegisterPassword;
-        private Button btnBackward;
         private Button btnBackHome;
     }
 }

@@ -10,11 +10,25 @@ using System.Windows.Forms;
 
 namespace Game_Client_Forms
 {
-    public partial class UserIDInfoForm : Form
+    public partial class UserIdInfoForm : Form
     {
-        public UserIDInfoForm()
+        private Client _client;
+
+        public UserIdInfoForm()
         {
+            _client = Client.Instance;
             InitializeComponent();
+        }
+
+        private void btnBackHome_Click(object sender, EventArgs e)
+        {
+            _client.DisConnectToServer();
+        }
+
+        public void ShowUserId(string userId)
+        {
+            lblUserIdInfo.Text = userId;
+            Application.DoEvents();
         }
     }
 }

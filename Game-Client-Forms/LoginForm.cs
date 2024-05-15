@@ -9,18 +9,20 @@ using Microsoft.VisualBasic.ApplicationServices;
 using  Forms_Model;
 using Message = Forms_Model.Message;
 using System.Windows.Forms;
+using System.Net.WebSockets;
 
 namespace Game_Client_Forms
 {
     public partial class LoginForm : Form
     {
-        private static Form? _instance;
+        private static LoginForm? _instance;
         private GameForm? _gameform;
         private MainRobbyForm? _mainRobbyform;
         private UserInfoRegisterForm? _userInfoRegisterform;
-        private UserInfoForm? _userInfoform;
         private UserInfoUnregisterForm? _userInfounregisterform;
-        private UserPasswordSettingForm? _userPasswordSettingform;
+        private UserIdInfoForm? _userIdInfoForm;
+        private UserInfoForm? _userInfoForm;
+        private UserPasswordSettingForm? _userPasswordSettingForm;
         private Client _client;
         private Logger _logger;
 
@@ -32,7 +34,7 @@ namespace Game_Client_Forms
             InitializeComponent();
         }
 
-        public static Form Instance
+        public static LoginForm Instance
         {
             get
             {
@@ -68,7 +70,6 @@ namespace Game_Client_Forms
                     if (message.Text.Equals("CONNECTED"))
                     {
                         Invoke((MethodInvoker)(() => ProcessRegistResponse()));
-                        _logger.Log(Logger.LogLevel.Info, _client.GetClientName());
                     } 
                     else if (message.Text.Equals("COMPLETED"))
                     {
@@ -80,10 +81,52 @@ namespace Game_Client_Forms
                     }
                     break;
                 case "SEARCH_RESPONSE":
-                    Invoke((MethodInvoker)((() => ProcessSearchResponse())));
+                    if (message.Text.Equals("CONNECTED"))
+                    {
+                        Invoke((MethodInvoker)((() => ProcessSearchResponse())));
+                    }
+                    else if (message.Text.Equals("REFUSED"))
+                    {
+                        _logger.Log(Logger.LogLevel.Info, "해당하는 정보가 없습니다.");
+                    }
+                    else 
+                    {
+                        if (message.Destination.Equals("ID_FORM"))
+                        {
+                            Invoke((MethodInvoker)((() => ProcessSearchIdResponse(message.Text))));
+                            break;
+                        }
+
+                        if (message.Destination.Equals("PASSWORD_FORM"))
+                        {
+                            Invoke((MethodInvoker)((() => ProcessSearchPasswordRespnose())));
+                            break;
+                        }
+                    }
                     break;
                 case "UNREGIST_RESPONSE":
-                    Invoke((MethodInvoker)((() => ProcessUnRegisterResponse())));
+                    if (message.Text.Equals("CONNECTED"))
+                    {
+                        Invoke((MethodInvoker)((() => ProcessUnRegisterResponse())));
+                    }
+                    else if (message.Text.Equals("COMPLETED"))
+                    {
+                        _logger.Log(Logger.LogLevel.Info, "삭제가 완료 되었습니다.");
+                    }
+                    else
+                    {
+                        _logger.Log(Logger.LogLevel.Info, "계정 정보가 잘못 되었습니다.");
+                    }
+                    break;
+                case "RENEW_RESPONSE":
+                    if (message.Text.Equals("COMPLETED"))
+                    {
+                        _logger.Log(Logger.LogLevel.Info, "비밀 번호 변경이 완료 되었습니다.");
+                    }
+                    else
+                    {
+                        _logger.Log(Logger.LogLevel.Info, "비밀 번호 변경에 실패 했습니다.");
+                    }
                     break;
                 default:
                     break;
@@ -92,6 +135,22 @@ namespace Game_Client_Forms
 
         private void ProcessDisConnectResponse()
         {
+            if (_userIdInfoForm != null)
+            {
+                _logger.Log(Logger.LogLevel.Info, "UserIdInfoForm 비활성화");
+                _userIdInfoForm.Dispose();
+                _userIdInfoForm = null;
+                ProcessDisConnectResponse();
+            }
+
+            if (_userPasswordSettingForm != null)
+            {
+                _logger.Log(Logger.LogLevel.Info, "UserPasswordSettingForm 비활성화");
+                _userPasswordSettingForm.Dispose();
+                _userPasswordSettingForm = null;
+                ProcessDisConnectResponse();
+            }
+
             if (_mainRobbyform != null)
             {
                 _logger.Log(Logger.LogLevel.Info, "MainRobbyForm 비활성화");
@@ -104,11 +163,11 @@ namespace Game_Client_Forms
                 _userInfoRegisterform.Dispose();
                 _userInfoRegisterform = null;
             }
-            else if (_userInfoform != null)
+            else if (_userInfoForm != null)
             {
                 _logger.Log(Logger.LogLevel.Info, "UserInfoForm 비활성화");
-                _userInfoform.Dispose();
-                _userInfoform = null;
+                _userInfoForm.Dispose();
+                _userInfoForm = null;
             }
             else if (_userInfounregisterform != null)
             {
@@ -145,12 +204,39 @@ namespace Game_Client_Forms
         private void ProcessSearchResponse()
         {
             this.Hide();
-            if (_userInfoform == null)
+            if (_userInfoForm == null)
             {
-                _userInfoform = new UserInfoForm();
-                _userInfoform.FormClosed += UserInfoForm_FormClosed;
+                _userInfoForm = new UserInfoForm();
+                _userInfoForm.FormClosed += UserInfoForm_FormClosed;
             }
-            _userInfoform.Show();
+            _userInfoForm.Show();
+        }
+
+        private void ProcessSearchIdResponse(string userId)
+        {
+            _userInfoForm.Hide();
+
+            if (_userIdInfoForm == null)
+            {
+                _userIdInfoForm = new UserIdInfoForm();
+                _userIdInfoForm.FormClosed += UserIdInfoForm_FormClosed;
+            }
+
+            _userIdInfoForm.ShowUserId(userId);
+            _userIdInfoForm.Show();
+        }
+
+        private void ProcessSearchPasswordRespnose()
+        {
+            _userInfoForm.Hide();
+
+            if (_userPasswordSettingForm == null)
+            {
+                _userPasswordSettingForm = new UserPasswordSettingForm();
+                _userPasswordSettingForm.FormClosed += UserPasswordSettingForm_FormClosed;
+            }
+
+            _userPasswordSettingForm.Show();
         }
 
         private void ProcessUnRegisterResponse()
@@ -183,8 +269,8 @@ namespace Game_Client_Forms
         private void UserInfoForm_FormClosed(object? sender, FormClosedEventArgs e)
         {
             _client.DisConnectToServer();
-            _userInfoform.Dispose();
-            _userInfoform = null;
+            _userInfoForm.Dispose();
+            _userInfoForm = null;
             this.Show();
         }
 
@@ -193,6 +279,22 @@ namespace Game_Client_Forms
             _client.DisConnectToServer();
             _userInfounregisterform.Dispose();
             _userInfounregisterform = null;
+            this.Show();
+        }
+
+        private void UserIdInfoForm_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            _client.DisConnectToServer();
+            _userIdInfoForm.Dispose();
+            _userIdInfoForm = null;
+            this.Show();
+        }
+
+        private void UserPasswordSettingForm_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            _client.DisConnectToServer();
+            _userPasswordSettingForm.Dispose();
+            _userPasswordSettingForm = null;
             this.Show();
         }
 
@@ -245,6 +347,7 @@ namespace Game_Client_Forms
             _client.ConnectToServer();
             _client.SendToServer(() => new Message
             {
+                Name = "DEFAULT",
                 RequestType = "UNREGIST"
             });
         }
@@ -262,6 +365,19 @@ namespace Game_Client_Forms
                 return;
             }
 
+            if (message.RequestType.Equals("ROGIN_RESPONSE"))
+            {
+                EnqueueMessage(message);
+                return;
+            }
+
+            if (message.RequestType.Equals("SEARCH_RESPONSE"))
+            {
+                this.Name = message.Name;
+                EnqueueMessage(message);
+                return;
+            }
+
             if (message.RequestType.Equals("REGIST_RESPONSE"))
             {
                 this.Name = message.Name;
@@ -269,7 +385,9 @@ namespace Game_Client_Forms
                 return;
             }
 
-            if (message.RequestType.Equals("ROGIN_RESPONSE")) {
+            if (message.RequestType.Equals("UNREGIST_RESPONSE"))
+            {
+                this.Name = message.Name;
                 EnqueueMessage(message);
                 return;
             }
