@@ -15,8 +15,10 @@ namespace Game_Client_Forms
     public partial class UserInfoUnregisterForm : Form
     {
         Client _client;
+        LoginForm _loginForm;
         public UserInfoUnregisterForm()
         {
+            _loginForm = LoginForm.Instance;
             _client = Client.Instance;
             InitializeComponent();
         }
@@ -27,6 +29,12 @@ namespace Game_Client_Forms
             tBoxUserPassword.PlaceholderText = "비밀 번호 입력이 필요 합니다.";
         }
 
+        private void UserInfoUnregisterForm_FormClosed(Object? sender, FormClosedEventArgs e)
+        {
+            _client.DisConnectToServer();
+            _loginForm.Show();
+            this.Dispose();
+        }
         private void btnBackHome_Click(object sender, EventArgs e)
         {
             _client.DisConnectToServer();

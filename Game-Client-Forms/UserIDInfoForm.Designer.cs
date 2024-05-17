@@ -109,6 +109,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "UserIdInfoForm";
             Text = "UserIDInfoForm";
+            FormClosed += UserIdInfoForm_FormClosed;
             ResumeLayout(false);
             PerformLayout();
         }

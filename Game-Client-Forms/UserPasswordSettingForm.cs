@@ -14,11 +14,20 @@ namespace Game_Client_Forms
     public partial class UserPasswordSettingForm : Form
     {
         Client _client;
+        LoginForm _loginForm;
 
         public UserPasswordSettingForm()
         {
+            _loginForm = LoginForm.Instance;
             _client = Client.Instance;
             InitializeComponent();
+        }
+
+        private void UserPasswordSettingForm_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            _client.DisConnectToServer();
+            _loginForm.Show();
+            this.Dispose();
         }
 
         private void btnBackHome_Click(object sender, EventArgs e)

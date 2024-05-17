@@ -117,6 +117,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "UserPasswordSettingForm";
             Text = "UserPasswordSettingForm";
+            FormClosed += UserPasswordSettingForm_FormClosed;
             ResumeLayout(false);
             PerformLayout();
         }

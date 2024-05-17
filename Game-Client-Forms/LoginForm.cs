@@ -10,6 +10,7 @@ using  Forms_Model;
 using Message = Forms_Model.Message;
 using System.Windows.Forms;
 using System.Net.WebSockets;
+using Form_Repository;
 
 namespace Game_Client_Forms
 {
@@ -54,6 +55,18 @@ namespace Game_Client_Forms
                 case "DISCONNECT_RESPONSE":
                     Invoke((MethodInvoker)(() => ProcessDisConnectResponse()));
                     break;
+                case "CHAT_RESPONSE":
+                    Invoke((MethodInvoker)(() => ProcessAllChatResponse(message.Text)));
+                    break;
+                case "ENTERANCE_RESPONSE":
+                    Invoke((MethodInvoker)(() => ProcessEnteranceResponse(message.Text)));
+                    break;
+                case "EXIT_RESPONSE":
+                    Invoke((MethodInvoker)(() => ProcesssGameRoomExitResponse(message.Text)));
+                    break;
+                case "GAMEROOM_RENEW_RESPONSE":
+                    Invoke((MethodInvoker)(() => ProcessGameRoomRenewResponse(message.Text)));
+                    break;
                 case "LOGIN_RESPONSE":
                     if (message.Text.Equals("ACCEPT_NORMAL_USER"))
                     {
@@ -62,8 +75,17 @@ namespace Game_Client_Forms
                     }
                     else
                     {
-                        _logger.Log(Logger.LogLevel.Info, "해당하는 회원이 없습니다.");
-                        _client.DisConnectToServer();
+                        if (message.Destination.Equals("MAIN_ROBBY"))
+                        {
+                            _client.SetGameRoomRepository(message.Text);
+                            Invoke((MethodInvoker)(() => _mainRobbyform.RenewMainRobby()));
+                            break;
+                        }
+                        else
+                        {
+                            _logger.Log(Logger.LogLevel.Info, "해당하는 회원이 없습니다.");
+                            _client.DisConnectToServer();
+                        }
                     }
                     break;
                 case "REGIST_RESPONSE":
@@ -134,10 +156,9 @@ namespace Game_Client_Forms
         }
 
         private void ProcessDisConnectResponse()
-        {
+        { 
             if (_userIdInfoForm != null)
             {
-                _logger.Log(Logger.LogLevel.Info, "UserIdInfoForm 비활성화");
                 _userIdInfoForm.Dispose();
                 _userIdInfoForm = null;
                 ProcessDisConnectResponse();
@@ -145,7 +166,6 @@ namespace Game_Client_Forms
 
             if (_userPasswordSettingForm != null)
             {
-                _logger.Log(Logger.LogLevel.Info, "UserPasswordSettingForm 비활성화");
                 _userPasswordSettingForm.Dispose();
                 _userPasswordSettingForm = null;
                 ProcessDisConnectResponse();
@@ -153,27 +173,28 @@ namespace Game_Client_Forms
 
             if (_mainRobbyform != null)
             {
-                _logger.Log(Logger.LogLevel.Info, "MainRobbyForm 비활성화");
                 _mainRobbyform.Dispose();
                 _mainRobbyform = null;
             }
             else if (_userInfoRegisterform != null)
             {
-                _logger.Log(Logger.LogLevel.Info, "RegisterForm 비활성화");
                 _userInfoRegisterform.Dispose();
                 _userInfoRegisterform = null;
             }
             else if (_userInfoForm != null)
             {
-                _logger.Log(Logger.LogLevel.Info, "UserInfoForm 비활성화");
                 _userInfoForm.Dispose();
                 _userInfoForm = null;
             }
             else if (_userInfounregisterform != null)
             {
-                _logger.Log(Logger.LogLevel.Info, "UserInfoUnregisterForm 비활성화");
                 _userInfounregisterform.Dispose();
                 _userInfounregisterform = null;
+            }
+            else if (_gameform != null)
+            {
+                _gameform.Dispose();
+                _gameform = null;
             }
 
             this.Show();
@@ -185,7 +206,6 @@ namespace Game_Client_Forms
             if (_mainRobbyform == null)
             {
                 _mainRobbyform = new MainRobbyForm();
-                _mainRobbyform.FormClosed += MainRobbyForm_FormClosed;
             }
             _mainRobbyform.Show();
         }
@@ -196,7 +216,6 @@ namespace Game_Client_Forms
             if (_userInfoRegisterform == null)
             {
                 _userInfoRegisterform = new UserInfoRegisterForm();
-                _userInfoRegisterform.FormClosed += UserInfoRegisterForm_FormClosed;
             }
             _userInfoRegisterform.Show();
         }
@@ -207,33 +226,80 @@ namespace Game_Client_Forms
             if (_userInfoForm == null)
             {
                 _userInfoForm = new UserInfoForm();
-                _userInfoForm.FormClosed += UserInfoForm_FormClosed;
             }
             _userInfoForm.Show();
         }
 
-        private void ProcessSearchIdResponse(string userId)
+        private void ProcessSearchIdResponse(string text)
         {
             _userInfoForm.Hide();
 
             if (_userIdInfoForm == null)
             {
                 _userIdInfoForm = new UserIdInfoForm();
-                _userIdInfoForm.FormClosed += UserIdInfoForm_FormClosed;
             }
 
-            _userIdInfoForm.ShowUserId(userId);
+            _userIdInfoForm.ShowUserId(text);
             _userIdInfoForm.Show();
+        }
+
+        private void ProcessEnteranceResponse(string text)
+        {
+            _mainRobbyform.Dispose();
+            _mainRobbyform = null;
+            GameRoom gameRoom = _client.GetGameRoomRepository().ConvertJsonToGameRoom(text);
+            _client.GetGameRoomRepository().RenewGameRoom(gameRoom);
+
+            if (_gameform == null)
+            {
+                _gameform = new GameForm();
+                _gameform.FormClosed += GameForm_FormClosed;
+            }
+
+            _gameform.SetCurrentGameRoom(gameRoom);
+            _gameform.Show();
+        }
+
+        private void ProcessGameRoomRenewResponse(string text)
+        {
+            GameRoom gameRoom = _client.GetGameRoomRepository().ConvertJsonToGameRoom(text);
+            _client.GetGameRoomRepository().RenewGameRoom(gameRoom);
+            // GameForm 이 활성화 된 상태일 때 예외 처리 
+
+            if (_mainRobbyform != null) {
+                _mainRobbyform.RenewMainRobby();
+            }
+
+            if (_gameform != null)
+            {
+                _gameform.SetCurrentGameRoom(gameRoom);
+            }
+        }
+        
+        private void ProcesssGameRoomExitResponse(string text)
+        {
+            _gameform.Dispose();
+            _gameform = null;
+            GameRoom gameRoom = _client.GetGameRoomRepository().ConvertJsonToGameRoom(text);
+            _client.GetGameRoomRepository().RenewGameRoom(gameRoom);
+            if (_mainRobbyform == null)
+            {
+                _mainRobbyform = new MainRobbyForm();
+            }
+            _mainRobbyform.Show();
+        }
+
+        private void ProcessAllChatResponse(string text)
+        {
+            _mainRobbyform.ShowMainRobbyChatLog(text);
         }
 
         private void ProcessSearchPasswordRespnose()
         {
             _userInfoForm.Hide();
-
             if (_userPasswordSettingForm == null)
             {
                 _userPasswordSettingForm = new UserPasswordSettingForm();
-                _userPasswordSettingForm.FormClosed += UserPasswordSettingForm_FormClosed;
             }
 
             _userPasswordSettingForm.Show();
@@ -245,57 +311,23 @@ namespace Game_Client_Forms
             if (_userInfounregisterform == null)
             {
                 _userInfounregisterform = new UserInfoUnregisterForm();
-                _userInfounregisterform.FormClosed += UserInfoUnregisterForm_FormClosed;
             }
             _userInfounregisterform.Show();
         }
 
-        private void MainRobbyForm_FormClosed(object? sender, FormClosedEventArgs e)
+        private void GameForm_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            _client.DisConnectToServer();
-            _mainRobbyform.Dispose();
-            _mainRobbyform = null;
-            this.Show();
-        }
+            _client.SendToServer(() => new Message
+            {
+                Destination = "GAME_ROOM",
+                RequestType = "RENEW_GAME_ROOMS",
+                Name = _client.GetClientName(),
+                Text = "ALL"
+            });
 
-        private void UserInfoRegisterForm_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            _client.DisConnectToServer();
-            _userInfoRegisterform.Dispose();
-            _userInfoRegisterform = null;
-            this.Show();
-        }
-
-        private void UserInfoForm_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            _client.DisConnectToServer();
-            _userInfoForm.Dispose();
-            _userInfoForm = null;
-            this.Show();
-        }
-
-        private void UserInfoUnregisterForm_FormClosed(Object? sender, FormClosedEventArgs e)
-        {
-            _client.DisConnectToServer();
-            _userInfounregisterform.Dispose();
-            _userInfounregisterform = null;
-            this.Show();
-        }
-
-        private void UserIdInfoForm_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            _client.DisConnectToServer();
-            _userIdInfoForm.Dispose();
-            _userIdInfoForm = null;
-            this.Show();
-        }
-
-        private void UserPasswordSettingForm_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            _client.DisConnectToServer();
-            _userPasswordSettingForm.Dispose();
-            _userPasswordSettingForm = null;
-            this.Show();
+            _gameform.Dispose();
+            _mainRobbyform = new MainRobbyForm();
+            _mainRobbyform.Show();
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -319,7 +351,6 @@ namespace Game_Client_Forms
             });
 
         }
-
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
@@ -365,8 +396,9 @@ namespace Game_Client_Forms
                 return;
             }
 
-            if (message.RequestType.Equals("ROGIN_RESPONSE"))
+            if (message.RequestType.Equals("LOGIN_RESPONSE"))
             {
+                this.Name = message.Name;
                 EnqueueMessage(message);
                 return;
             }
@@ -400,6 +432,7 @@ namespace Game_Client_Forms
     {
         private static Client? _instance;
         public event Action<Message> MessageReceived;
+        private GameRoomRepository _gameRoomRepository;
         private ClientSocketHandler _clientSocketHandler;
         private Queue<Message> _messages;
         private Socket _socket;
@@ -424,6 +457,7 @@ namespace Game_Client_Forms
         {
             _logger = Logger.Instance;
             _clientSocketHandler = new ClientSocketHandler();
+            _gameRoomRepository = new GameRoomRepository();
             _messages = new Queue<Message>();
             _port = 8080;
             _messagesLock = new object();
@@ -463,6 +497,16 @@ namespace Game_Client_Forms
             {
                 _logger.Log(Logger.LogLevel.Error, e.ToString());
             }
+        }
+
+        public void SetGameRoomRepository(string jsonString)
+        {
+            _gameRoomRepository.ConvertToRoomList(jsonString);
+        }
+
+        public GameRoomRepository GetGameRoomRepository() 
+        { 
+            return _gameRoomRepository; 
         }
 
         public void DisConnectToServer()

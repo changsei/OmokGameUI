@@ -97,6 +97,7 @@
             btnInputUserChat.TabIndex = 22;
             btnInputUserChat.Text = "입력";
             btnInputUserChat.UseVisualStyleBackColor = true;
+            btnInputUserChat.Click += btnInputUserChat_Click;
             // 
             // tBoxUserChat
             // 
@@ -196,6 +197,7 @@
             btnBackward.TabIndex = 20;
             btnBackward.Text = "나가기";
             btnBackward.UseVisualStyleBackColor = true;
+            btnBackward.Click += btnBackward_Click;
             // 
             // btnSurrender
             // 
@@ -205,6 +207,7 @@
             btnSurrender.TabIndex = 19;
             btnSurrender.Text = "기권";
             btnSurrender.UseVisualStyleBackColor = true;
+            btnSurrender.Click += btnSurrender_Click;
             // 
             // btnReady
             // 
@@ -214,6 +217,7 @@
             btnReady.TabIndex = 18;
             btnReady.Text = "준비/시작";
             btnReady.UseVisualStyleBackColor = true;
+            btnReady.Click += btnReady_Click;
             // 
             // GameForm
             // 

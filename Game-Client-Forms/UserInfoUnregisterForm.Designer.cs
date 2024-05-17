@@ -115,6 +115,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "UserInfoUnregisterForm";
             Text = "UserInfoUnregisterForm";
+            FormClosed += UserInfoUnregisterForm_FormClosed;
             Load += UserInfoUnregisterForm_Load;
             ResumeLayout(false);
             PerformLayout();

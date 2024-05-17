@@ -13,11 +13,18 @@ namespace Game_Client_Forms
     public partial class UserIdInfoForm : Form
     {
         private Client _client;
-
+        private LoginForm _loginForm;
         public UserIdInfoForm()
         {
+            _loginForm = LoginForm.Instance;
             _client = Client.Instance;
             InitializeComponent();
+        }
+        private void UserIdInfoForm_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            _client.DisConnectToServer();
+            _loginForm.Show();
+            this.Dispose();
         }
 
         private void btnBackHome_Click(object sender, EventArgs e)

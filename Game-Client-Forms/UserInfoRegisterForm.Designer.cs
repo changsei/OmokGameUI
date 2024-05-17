@@ -144,6 +144,7 @@ namespace Game_Client_Forms
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "UserInfoRegisterForm";
             Text = "RegisterForm";
+            FormClosed += UserInfoRegisterForm_FormClosed;
             Load += RegisterForm_Load;
             ResumeLayout(false);
             PerformLayout();

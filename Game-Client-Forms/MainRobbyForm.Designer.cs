@@ -40,35 +40,35 @@
             richBoxAllUserChatLog = new RichTextBox();
             panel3 = new Panel();
             panel6 = new Panel();
-            label8 = new Label();
+            lblRoomUseStatus3 = new Label();
             label9 = new Label();
-            label10 = new Label();
-            label11 = new Label();
+            lblRoomSubUserName3 = new Label();
+            lblRoomMainUserName3 = new Label();
             label12 = new Label();
             label13 = new Label();
-            label14 = new Label();
-            button2 = new Button();
+            lblRoomNumber3 = new Label();
+            btnEnteranceRoom3 = new Button();
             panel5 = new Panel();
-            label1 = new Label();
+            lblRoomUseStatus2 = new Label();
             label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
+            lblRoomSubUserName2 = new Label();
+            lblRoomMainUserName2 = new Label();
             label5 = new Label();
             label6 = new Label();
-            label7 = new Label();
-            button1 = new Button();
+            lblRoomNumber2 = new Label();
+            btnEnteranceRoom2 = new Button();
             lblPageNumber = new Label();
             btnNextPage = new Button();
             btnBackPage = new Button();
             panel4 = new Panel();
-            lblRoomUseStatus = new Label();
+            lblRoomUseStatus1 = new Label();
             lblRoomStatus = new Label();
-            lblSubUserName = new Label();
-            lblMainUserName = new Label();
+            lblRoomSubUserName1 = new Label();
+            lblRoomMainUserName1 = new Label();
             lblSubUser = new Label();
             lblMainUser = new Label();
-            lblRoomNumber = new Label();
-            btnEnteranceRoom = new Button();
+            lblRoomNumber1 = new Label();
+            btnEnteranceRoom1 = new Button();
             lblVersion = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -117,6 +117,7 @@
             btnExitClient.TabIndex = 20;
             btnExitClient.Text = "클라이언트 종료";
             btnExitClient.UseVisualStyleBackColor = true;
+            btnExitClient.Click += btnExitClient_Click;
             // 
             // btnBackHome
             // 
@@ -156,6 +157,7 @@
             btnInputUserChat.TabIndex = 22;
             btnInputUserChat.Text = "입력";
             btnInputUserChat.UseVisualStyleBackColor = true;
+            btnInputUserChat.Click += btnInputUserChat_Click;
             // 
             // tBoxUserChat
             // 
@@ -163,7 +165,6 @@
             tBoxUserChat.Name = "tBoxUserChat";
             tBoxUserChat.Size = new Size(341, 31);
             tBoxUserChat.TabIndex = 1;
-            tBoxUserChat.Text = "여기에 채팅 내용을 입력해주세요.";
             // 
             // richBoxAllUserChatLog
             // 
@@ -192,27 +193,27 @@
             // panel6
             // 
             panel6.BorderStyle = BorderStyle.FixedSingle;
-            panel6.Controls.Add(label8);
+            panel6.Controls.Add(lblRoomUseStatus3);
             panel6.Controls.Add(label9);
-            panel6.Controls.Add(label10);
-            panel6.Controls.Add(label11);
+            panel6.Controls.Add(lblRoomSubUserName3);
+            panel6.Controls.Add(lblRoomMainUserName3);
             panel6.Controls.Add(label12);
             panel6.Controls.Add(label13);
-            panel6.Controls.Add(label14);
-            panel6.Controls.Add(button2);
+            panel6.Controls.Add(lblRoomNumber3);
+            panel6.Controls.Add(btnEnteranceRoom3);
             panel6.Location = new Point(19, 364);
             panel6.Name = "panel6";
             panel6.Size = new Size(675, 135);
             panel6.TabIndex = 9;
             // 
-            // label8
+            // lblRoomUseStatus3
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(115, 91);
-            label8.Name = "label8";
-            label8.Size = new Size(72, 25);
-            label8.TabIndex = 8;
-            label8.Text = "방 상태";
+            lblRoomUseStatus3.AutoSize = true;
+            lblRoomUseStatus3.Location = new Point(115, 91);
+            lblRoomUseStatus3.Name = "lblRoomUseStatus3";
+            lblRoomUseStatus3.Size = new Size(72, 25);
+            lblRoomUseStatus3.TabIndex = 8;
+            lblRoomUseStatus3.Text = "방 상태";
             // 
             // label9
             // 
@@ -223,23 +224,23 @@
             label9.TabIndex = 7;
             label9.Text = "Status";
             // 
-            // label10
+            // lblRoomSubUserName3
             // 
-            label10.AutoSize = true;
-            label10.Location = new Point(115, 65);
-            label10.Name = "label10";
-            label10.Size = new Size(102, 25);
-            label10.TabIndex = 5;
-            label10.Text = "도전자이름";
+            lblRoomSubUserName3.AutoSize = true;
+            lblRoomSubUserName3.Location = new Point(115, 65);
+            lblRoomSubUserName3.Name = "lblRoomSubUserName3";
+            lblRoomSubUserName3.Size = new Size(102, 25);
+            lblRoomSubUserName3.TabIndex = 5;
+            lblRoomSubUserName3.Text = "도전자이름";
             // 
-            // label11
+            // lblRoomMainUserName3
             // 
-            label11.AutoSize = true;
-            label11.Location = new Point(115, 39);
-            label11.Name = "label11";
-            label11.Size = new Size(84, 25);
-            label11.TabIndex = 4;
-            label11.Text = "방장이름";
+            lblRoomMainUserName3.AutoSize = true;
+            lblRoomMainUserName3.Location = new Point(115, 39);
+            lblRoomMainUserName3.Name = "lblRoomMainUserName3";
+            lblRoomMainUserName3.Size = new Size(84, 25);
+            lblRoomMainUserName3.TabIndex = 4;
+            lblRoomMainUserName3.Text = "방장이름";
             // 
             // label12
             // 
@@ -259,48 +260,49 @@
             label13.TabIndex = 2;
             label13.Text = "Main User";
             // 
-            // label14
+            // lblRoomNumber3
             // 
-            label14.AutoSize = true;
-            label14.Location = new Point(14, 14);
-            label14.Name = "label14";
-            label14.Size = new Size(40, 25);
-            label14.TabIndex = 1;
-            label14.Text = "3번";
+            lblRoomNumber3.AutoSize = true;
+            lblRoomNumber3.Location = new Point(14, 14);
+            lblRoomNumber3.Name = "lblRoomNumber3";
+            lblRoomNumber3.Size = new Size(40, 25);
+            lblRoomNumber3.TabIndex = 1;
+            lblRoomNumber3.Text = "3번";
             // 
-            // button2
+            // btnEnteranceRoom3
             // 
-            button2.Location = new Point(335, 14);
-            button2.Name = "button2";
-            button2.Size = new Size(321, 105);
-            button2.TabIndex = 0;
-            button2.Text = "입장";
-            button2.UseVisualStyleBackColor = true;
+            btnEnteranceRoom3.Location = new Point(335, 14);
+            btnEnteranceRoom3.Name = "btnEnteranceRoom3";
+            btnEnteranceRoom3.Size = new Size(321, 105);
+            btnEnteranceRoom3.TabIndex = 0;
+            btnEnteranceRoom3.Text = "입장";
+            btnEnteranceRoom3.UseVisualStyleBackColor = true;
+            btnEnteranceRoom3.Click += btnEnteranceRoom3_Click;
             // 
             // panel5
             // 
             panel5.BorderStyle = BorderStyle.FixedSingle;
-            panel5.Controls.Add(label1);
+            panel5.Controls.Add(lblRoomUseStatus2);
             panel5.Controls.Add(label2);
-            panel5.Controls.Add(label3);
-            panel5.Controls.Add(label4);
+            panel5.Controls.Add(lblRoomSubUserName2);
+            panel5.Controls.Add(lblRoomMainUserName2);
             panel5.Controls.Add(label5);
             panel5.Controls.Add(label6);
-            panel5.Controls.Add(label7);
-            panel5.Controls.Add(button1);
+            panel5.Controls.Add(lblRoomNumber2);
+            panel5.Controls.Add(btnEnteranceRoom2);
             panel5.Location = new Point(19, 211);
             panel5.Name = "panel5";
             panel5.Size = new Size(675, 135);
             panel5.TabIndex = 9;
             // 
-            // label1
+            // lblRoomUseStatus2
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(115, 91);
-            label1.Name = "label1";
-            label1.Size = new Size(72, 25);
-            label1.TabIndex = 8;
-            label1.Text = "방 상태";
+            lblRoomUseStatus2.AutoSize = true;
+            lblRoomUseStatus2.Location = new Point(115, 91);
+            lblRoomUseStatus2.Name = "lblRoomUseStatus2";
+            lblRoomUseStatus2.Size = new Size(72, 25);
+            lblRoomUseStatus2.TabIndex = 8;
+            lblRoomUseStatus2.Text = "방 상태";
             // 
             // label2
             // 
@@ -311,23 +313,23 @@
             label2.TabIndex = 7;
             label2.Text = "Status";
             // 
-            // label3
+            // lblRoomSubUserName2
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(115, 65);
-            label3.Name = "label3";
-            label3.Size = new Size(102, 25);
-            label3.TabIndex = 5;
-            label3.Text = "도전자이름";
+            lblRoomSubUserName2.AutoSize = true;
+            lblRoomSubUserName2.Location = new Point(115, 65);
+            lblRoomSubUserName2.Name = "lblRoomSubUserName2";
+            lblRoomSubUserName2.Size = new Size(102, 25);
+            lblRoomSubUserName2.TabIndex = 5;
+            lblRoomSubUserName2.Text = "도전자이름";
             // 
-            // label4
+            // lblRoomMainUserName2
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(115, 39);
-            label4.Name = "label4";
-            label4.Size = new Size(84, 25);
-            label4.TabIndex = 4;
-            label4.Text = "방장이름";
+            lblRoomMainUserName2.AutoSize = true;
+            lblRoomMainUserName2.Location = new Point(115, 39);
+            lblRoomMainUserName2.Name = "lblRoomMainUserName2";
+            lblRoomMainUserName2.Size = new Size(84, 25);
+            lblRoomMainUserName2.TabIndex = 4;
+            lblRoomMainUserName2.Text = "방장이름";
             // 
             // label5
             // 
@@ -347,23 +349,24 @@
             label6.TabIndex = 2;
             label6.Text = "Main User";
             // 
-            // label7
+            // lblRoomNumber2
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(14, 14);
-            label7.Name = "label7";
-            label7.Size = new Size(40, 25);
-            label7.TabIndex = 1;
-            label7.Text = "2번";
+            lblRoomNumber2.AutoSize = true;
+            lblRoomNumber2.Location = new Point(14, 14);
+            lblRoomNumber2.Name = "lblRoomNumber2";
+            lblRoomNumber2.Size = new Size(40, 25);
+            lblRoomNumber2.TabIndex = 1;
+            lblRoomNumber2.Text = "2번";
             // 
-            // button1
+            // btnEnteranceRoom2
             // 
-            button1.Location = new Point(335, 14);
-            button1.Name = "button1";
-            button1.Size = new Size(321, 105);
-            button1.TabIndex = 0;
-            button1.Text = "입장";
-            button1.UseVisualStyleBackColor = true;
+            btnEnteranceRoom2.Location = new Point(335, 14);
+            btnEnteranceRoom2.Name = "btnEnteranceRoom2";
+            btnEnteranceRoom2.Size = new Size(321, 105);
+            btnEnteranceRoom2.TabIndex = 0;
+            btnEnteranceRoom2.Text = "입장";
+            btnEnteranceRoom2.UseVisualStyleBackColor = true;
+            btnEnteranceRoom2.Click += btnEnteranceRoom2_Click;
             // 
             // lblPageNumber
             // 
@@ -396,27 +399,27 @@
             // panel4
             // 
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(lblRoomUseStatus);
+            panel4.Controls.Add(lblRoomUseStatus1);
             panel4.Controls.Add(lblRoomStatus);
-            panel4.Controls.Add(lblSubUserName);
-            panel4.Controls.Add(lblMainUserName);
+            panel4.Controls.Add(lblRoomSubUserName1);
+            panel4.Controls.Add(lblRoomMainUserName1);
             panel4.Controls.Add(lblSubUser);
             panel4.Controls.Add(lblMainUser);
-            panel4.Controls.Add(lblRoomNumber);
-            panel4.Controls.Add(btnEnteranceRoom);
+            panel4.Controls.Add(lblRoomNumber1);
+            panel4.Controls.Add(btnEnteranceRoom1);
             panel4.Location = new Point(19, 61);
             panel4.Name = "panel4";
             panel4.Size = new Size(675, 135);
             panel4.TabIndex = 0;
             // 
-            // lblRoomUseStatus
+            // lblRoomUseStatus1
             // 
-            lblRoomUseStatus.AutoSize = true;
-            lblRoomUseStatus.Location = new Point(115, 91);
-            lblRoomUseStatus.Name = "lblRoomUseStatus";
-            lblRoomUseStatus.Size = new Size(72, 25);
-            lblRoomUseStatus.TabIndex = 8;
-            lblRoomUseStatus.Text = "방 상태";
+            lblRoomUseStatus1.AutoSize = true;
+            lblRoomUseStatus1.Location = new Point(115, 91);
+            lblRoomUseStatus1.Name = "lblRoomUseStatus1";
+            lblRoomUseStatus1.Size = new Size(72, 25);
+            lblRoomUseStatus1.TabIndex = 8;
+            lblRoomUseStatus1.Text = "방 상태";
             // 
             // lblRoomStatus
             // 
@@ -427,23 +430,23 @@
             lblRoomStatus.TabIndex = 7;
             lblRoomStatus.Text = "Status";
             // 
-            // lblSubUserName
+            // lblRoomSubUserName1
             // 
-            lblSubUserName.AutoSize = true;
-            lblSubUserName.Location = new Point(115, 65);
-            lblSubUserName.Name = "lblSubUserName";
-            lblSubUserName.Size = new Size(102, 25);
-            lblSubUserName.TabIndex = 5;
-            lblSubUserName.Text = "도전자이름";
+            lblRoomSubUserName1.AutoSize = true;
+            lblRoomSubUserName1.Location = new Point(115, 65);
+            lblRoomSubUserName1.Name = "lblRoomSubUserName1";
+            lblRoomSubUserName1.Size = new Size(102, 25);
+            lblRoomSubUserName1.TabIndex = 5;
+            lblRoomSubUserName1.Text = "도전자이름";
             // 
-            // lblMainUserName
+            // lblRoomMainUserName1
             // 
-            lblMainUserName.AutoSize = true;
-            lblMainUserName.Location = new Point(115, 39);
-            lblMainUserName.Name = "lblMainUserName";
-            lblMainUserName.Size = new Size(84, 25);
-            lblMainUserName.TabIndex = 4;
-            lblMainUserName.Text = "방장이름";
+            lblRoomMainUserName1.AutoSize = true;
+            lblRoomMainUserName1.Location = new Point(115, 39);
+            lblRoomMainUserName1.Name = "lblRoomMainUserName1";
+            lblRoomMainUserName1.Size = new Size(84, 25);
+            lblRoomMainUserName1.TabIndex = 4;
+            lblRoomMainUserName1.Text = "방장이름";
             // 
             // lblSubUser
             // 
@@ -463,23 +466,24 @@
             lblMainUser.TabIndex = 2;
             lblMainUser.Text = "Main User";
             // 
-            // lblRoomNumber
+            // lblRoomNumber1
             // 
-            lblRoomNumber.AutoSize = true;
-            lblRoomNumber.Location = new Point(14, 14);
-            lblRoomNumber.Name = "lblRoomNumber";
-            lblRoomNumber.Size = new Size(40, 25);
-            lblRoomNumber.TabIndex = 1;
-            lblRoomNumber.Text = "1번";
+            lblRoomNumber1.AutoSize = true;
+            lblRoomNumber1.Location = new Point(14, 14);
+            lblRoomNumber1.Name = "lblRoomNumber1";
+            lblRoomNumber1.Size = new Size(40, 25);
+            lblRoomNumber1.TabIndex = 1;
+            lblRoomNumber1.Text = "1번";
             // 
-            // btnEnteranceRoom
+            // btnEnteranceRoom1
             // 
-            btnEnteranceRoom.Location = new Point(335, 14);
-            btnEnteranceRoom.Name = "btnEnteranceRoom";
-            btnEnteranceRoom.Size = new Size(321, 105);
-            btnEnteranceRoom.TabIndex = 0;
-            btnEnteranceRoom.Text = "입장";
-            btnEnteranceRoom.UseVisualStyleBackColor = true;
+            btnEnteranceRoom1.Location = new Point(335, 14);
+            btnEnteranceRoom1.Name = "btnEnteranceRoom1";
+            btnEnteranceRoom1.Size = new Size(321, 105);
+            btnEnteranceRoom1.TabIndex = 0;
+            btnEnteranceRoom1.Text = "입장";
+            btnEnteranceRoom1.UseVisualStyleBackColor = true;
+            btnEnteranceRoom1.Click += btnEnteranceRoom_Click;
             // 
             // lblVersion
             // 
@@ -504,6 +508,8 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "MainRobbyForm";
             Text = "MainRobbyForm";
+            FormClosed += MainRobbyForm_FormClosed;
+            Load += MainRobbyForm_Load;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
@@ -520,48 +526,55 @@
         }
 
         #endregion
-
         private Panel panel1;
         private Panel panel2;
         private Panel panel3;
-        private Label lblVersion;
         private Panel panel4;
+        private Panel panel5;
+        private Panel panel6;
+
+        private Label lblVersion;
+        private Label lblRoomStatus;
+
+        private Label lblRoomNumber1;
+        private Label lblRoomMainUserName1;
+        private Label lblRoomSubUserName1;
+        private Label lblRoomUseStatus1;
+
+        private Label lblRoomNumber2;
+        private Label lblRoomMainUserName2;
+        private Label lblRoomSubUserName2;
+        private Label lblRoomUseStatus2;
+
+        private Label lblRoomNumber3;
+        private Label lblRoomMainUserName3;
+        private Label lblRoomSubUserName3;
+        private Label lblRoomUseStatus3;
+
+        private Label lblMainUser;
+        private Label lblSubUser;
+        private Label lblPageNumber;
+
+        private Label label2;
+        private Label label5;
+        private Label label6;
+        private Label label9;
+        private Label label12;
+        private Label label13;
+
         private Button btnExitClient;
         private Button btnBackHome;
         private Button btnSearchUserInfo;
         private Button btnInputUserChat;
+        private Button btnEnteranceRoom1;
+        private Button btnEnteranceRoom2;
+        private Button btnEnteranceRoom3;
+        private Button btnNextPage;
+        private Button btnBackPage;
+
         private CheckedListBox chkUserView;
         private TextBox tBoxUserChat;
         private RichTextBox richBoxAllUserChatLog;
         private RichTextBox richBoxUserInfo;
-        private Label lblRoomNumber;
-        private Button btnEnteranceRoom;
-        private Label lblRoomUseStatus;
-        private Label lblRoomStatus;
-        private Label lblSubUserName;
-        private Label lblMainUserName;
-        private Label lblSubUser;
-        private Label lblMainUser;
-        private Button btnNextPage;
-        private Button btnBackPage;
-        private Label lblPageNumber;
-        private Panel panel6;
-        private Label label8;
-        private Label label9;
-        private Label label10;
-        private Label label11;
-        private Label label12;
-        private Label label13;
-        private Label label14;
-        private Button button2;
-        private Panel panel5;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private Button button1;
     }
 }

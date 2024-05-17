@@ -14,6 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Form-Repository">
+      <HintPath>..\..\Form-Repository\Form-Repository\bin\Debug\net8.0-windows\Form-Repository.dll</HintPath>
+    </Reference>
     <Reference Include="Forms-Model">
       <HintPath>..\Game-Client-Forms-dll\Debug\net8.0-windows\Forms-Model.dll</HintPath>
     </Reference>

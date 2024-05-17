@@ -14,8 +14,10 @@ namespace Game_Client_Forms
     public partial class UserInfoForm : Form
     {
         Client _client;
+        LoginForm _loginForm;
         public UserInfoForm()
         {
+            _loginForm = LoginForm.Instance;
             _client = Client.Instance;
             InitializeComponent();
         }
@@ -24,6 +26,12 @@ namespace Game_Client_Forms
         {
             tBoxUserPhoneNumber.PlaceholderText = "전화번호를 입력 해주세요.";
             tBoxUserId.PlaceholderText = "계정을 입력 해주세요.";
+        }
+        private void UserInfoForm_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            _client.DisConnectToServer();
+            _loginForm.Show();
+            this.Dispose();
         }
 
         private void btnBackward_Click(object sender, EventArgs e)

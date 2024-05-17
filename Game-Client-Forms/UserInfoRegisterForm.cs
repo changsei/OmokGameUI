@@ -15,8 +15,10 @@ namespace Game_Client_Forms
     public partial class UserInfoRegisterForm : Form
     {
         private Client _client;
+        private LoginForm _loginForm;
         public UserInfoRegisterForm()
         {
+            _loginForm = LoginForm.Instance;
             _client = Client.Instance;
             InitializeComponent();
         }
@@ -28,6 +30,13 @@ namespace Game_Client_Forms
             tBoxUserPassword.PlaceholderText = "비밀번호를 입력 해주세요.";
             tBoxConfirmUserPassword.PlaceholderText = "비밀번호 확인이 필요합니다.";
             tBoxUserPhoneNumber.PlaceholderText = "전화번호가 필요합니다.";
+        }
+
+        private void UserInfoRegisterForm_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            _client.DisConnectToServer();
+            _loginForm.Show();
+            this.Dispose();
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
