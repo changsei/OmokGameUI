@@ -105,7 +105,6 @@
             tBoxUserChat.Name = "tBoxUserChat";
             tBoxUserChat.Size = new Size(341, 31);
             tBoxUserChat.TabIndex = 1;
-            tBoxUserChat.Text = "여기에 채팅 내용을 입력해주세요.";
             // 
             // richBoxUserChatLog
             // 
@@ -232,6 +231,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "GameForm";
             Text = "GameForm";
+            Load += GameForm_Load;
             pnlLog.ResumeLayout(false);
             pnlLog.PerformLayout();
             pnlUserStatus.ResumeLayout(false);

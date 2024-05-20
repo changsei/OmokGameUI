@@ -48,6 +48,8 @@ namespace Game_Client_Forms
                 Name = _client.GetClientName(),
                 Text = tBoxUserId.Text
             });
+
+            _client.GetUserRepository().AddUserBuffer(tBoxUserId.Text);
         }
 
         private void btnSearchUserId_Click(object sender, EventArgs e)
@@ -59,6 +61,47 @@ namespace Game_Client_Forms
                 Name = _client.GetClientName(),
                 Text = tBoxUserPhoneNumber.Text
             });
+        }
+
+        private void tBoxUserId_TextChanged(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)((() => UpdateButtonStatesAndGuide())));
+        }
+
+        private void tBoxUserPhoneNumber_TextChanged(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)((() => UpdateButtonStatesAndGuide())));
+        }
+
+        private void UpdateButtonStatesAndGuide()
+        {
+            bool isUserIdFilled = !string.IsNullOrWhiteSpace(tBoxUserId.Text);
+            bool isUserPhoneFilled = !string.IsNullOrWhiteSpace(tBoxUserPhoneNumber.Text);
+
+            btnSeachUserPassword.Enabled = isUserIdFilled;  
+            btnSearchUserId.Enabled = isUserPhoneFilled;   
+
+            if (isUserIdFilled && isUserPhoneFilled)
+            {
+                lblGuide.Text = "원하시는 버튼을 클릭해주세요.";
+                return;
+            }
+
+            if (isUserIdFilled)
+            {
+                lblGuide.Text = "비밀번호 갱신 시도가 가능합니다.";
+                return;
+            }
+            
+            if (isUserPhoneFilled)
+            {
+                lblGuide.Text = "계정정보 조회 시도가 가능합니다.";
+                return;
+            }
+            else
+            {
+                lblGuide.Text = "계정 또는 전화번호 정보가 필요합니다.";
+            }
         }
     }
 }

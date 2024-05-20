@@ -11,6 +11,7 @@ using Message = Forms_Model.Message;
 using System.Windows.Forms;
 using System.Net.WebSockets;
 using Form_Repository;
+using User = Forms_Model.User;
 
 namespace Game_Client_Forms
 {
@@ -49,14 +50,22 @@ namespace Game_Client_Forms
 
         private void OnMessageReceived(Message message)
         {
-            _logger.Log(Logger.LogLevel.Info, message.RequestType);
+            _logger.Log(Logger.LogLevel.Info, $"[메시지 타입]: {message.RequestType} - [메시지 내용]: {message.Text}");
+
             switch (message.RequestType)
             {
                 case "DISCONNECT_RESPONSE":
                     Invoke((MethodInvoker)(() => ProcessDisConnectResponse()));
                     break;
                 case "CHAT_RESPONSE":
-                    Invoke((MethodInvoker)(() => ProcessAllChatResponse(message.Text)));
+                    if (message.Destination.Equals("MAIN_ROBBY"))
+                    {
+                        Invoke((MethodInvoker)(() => ProcessAllChatResponse(message.Text)));
+                    }
+                    else if (message.Destination.Equals("GAME_ROOM"))
+                    {
+                        Invoke((MethodInvoker)(() => ProcessChatResponse(message.Text)));
+                    }
                     break;
                 case "ENTERANCE_RESPONSE":
                     Invoke((MethodInvoker)(() => ProcessEnteranceResponse(message.Text)));
@@ -92,7 +101,7 @@ namespace Game_Client_Forms
                     if (message.Text.Equals("CONNECTED"))
                     {
                         Invoke((MethodInvoker)(() => ProcessRegistResponse()));
-                    } 
+                    }
                     else if (message.Text.Equals("COMPLETED"))
                     {
                         _logger.Log(Logger.LogLevel.Info, "등록이 완료 되었습니다.");
@@ -111,7 +120,7 @@ namespace Game_Client_Forms
                     {
                         _logger.Log(Logger.LogLevel.Info, "해당하는 정보가 없습니다.");
                     }
-                    else 
+                    else
                     {
                         if (message.Destination.Equals("ID_FORM"))
                         {
@@ -156,7 +165,7 @@ namespace Game_Client_Forms
         }
 
         private void ProcessDisConnectResponse()
-        { 
+        {
             if (_userIdInfoForm != null)
             {
                 _userIdInfoForm.Dispose();
@@ -266,7 +275,8 @@ namespace Game_Client_Forms
             _client.GetGameRoomRepository().RenewGameRoom(gameRoom);
             // GameForm 이 활성화 된 상태일 때 예외 처리 
 
-            if (_mainRobbyform != null) {
+            if (_mainRobbyform != null)
+            {
                 _mainRobbyform.RenewMainRobby();
             }
 
@@ -275,7 +285,7 @@ namespace Game_Client_Forms
                 _gameform.SetCurrentGameRoom(gameRoom);
             }
         }
-        
+
         private void ProcesssGameRoomExitResponse(string text)
         {
             _gameform.Dispose();
@@ -292,6 +302,11 @@ namespace Game_Client_Forms
         private void ProcessAllChatResponse(string text)
         {
             _mainRobbyform.ShowMainRobbyChatLog(text);
+        }
+
+        private void ProcessChatResponse(string text)
+        {
+            _gameform.ShowGameRoomChatLog(text);
         }
 
         private void ProcessSearchPasswordRespnose()
@@ -320,7 +335,7 @@ namespace Game_Client_Forms
             _client.SendToServer(() => new Message
             {
                 Destination = "GAME_ROOM",
-                RequestType = "RENEW_GAME_ROOMS",
+                RequestType = "EXIT_GAME_ROOM",
                 Name = _client.GetClientName(),
                 Text = "ALL"
             });
@@ -334,6 +349,7 @@ namespace Game_Client_Forms
         {
             tBoxUserId.PlaceholderText = "계정을 입력 해주세요.";
             tBoxUserPassword.PlaceholderText = "비밀번호를 입력 해주세요.";
+            lblGuide.Text = "ID를 입력해주세요";
         }
 
         private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -347,6 +363,7 @@ namespace Game_Client_Forms
             _client.SendToServer(() => new Message
             {
                 Name = "DEFAULT",
+                Destination = "DATABASE",
                 RequestType = "SEARCH"
             });
 
@@ -358,6 +375,7 @@ namespace Game_Client_Forms
             _client.SendToServer(() => new Message
             {
                 Name = "DEFAULT",
+                Destination = "DATABASE",
                 RequestType = "REGIST"
             });
         }
@@ -367,20 +385,54 @@ namespace Game_Client_Forms
             _client.ConnectToServer();
             _client.SendToServer(() => new Message
             {
-                RequestType = "LOGIN",
                 Name = tBoxUserId.Text,
-                Text = tBoxUserPassword.Text
+                RequestType = "LOGIN",
+                Destination = "DATABASE",
+                Text = _client.GetUserRepository().ConvertUserToJson(new Forms_Model.User
+                {
+                    ID = tBoxUserId.Text,
+                    Password = tBoxUserPassword.Text
+                })
             });
         }
-
         private void btn_unregister_Click(object sender, EventArgs e)
         {
             _client.ConnectToServer();
             _client.SendToServer(() => new Message
             {
                 Name = "DEFAULT",
+                Destination = "DATABASE",
                 RequestType = "UNREGIST"
             });
+        }
+        private void tBoxUserId_TextChanged(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)((() => CheckTextBoxForLogin())));
+        }
+
+        private void tBoxUserPassword_TextChanged(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)((() => CheckTextBoxForLogin())));
+        }
+
+        private void CheckTextBoxForLogin()
+        {
+            if (string.IsNullOrWhiteSpace(tBoxUserId.Text))
+            {
+                lblGuide.Text = "ID를 입력해주세요.";
+                btnLogin.Enabled = false;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tBoxUserPassword.Text))
+            {
+                lblGuide.Text = "Password를 입력해주세요.";
+                btnLogin.Enabled = false;
+                return;
+            }
+
+            lblGuide.Text = "로그인 시도가 가능합니다.";
+            btnLogin.Enabled = true;
         }
     }
 
@@ -433,6 +485,7 @@ namespace Game_Client_Forms
         private static Client? _instance;
         public event Action<Message> MessageReceived;
         private GameRoomRepository _gameRoomRepository;
+        private UserRepository _userRepository;
         private ClientSocketHandler _clientSocketHandler;
         private Queue<Message> _messages;
         private Socket _socket;
@@ -458,6 +511,7 @@ namespace Game_Client_Forms
             _logger = Logger.Instance;
             _clientSocketHandler = new ClientSocketHandler();
             _gameRoomRepository = new GameRoomRepository();
+            _userRepository = new UserRepository(); 
             _messages = new Queue<Message>();
             _port = 8080;
             _messagesLock = new object();
@@ -499,6 +553,8 @@ namespace Game_Client_Forms
             }
         }
 
+        
+
         public void SetGameRoomRepository(string jsonString)
         {
             _gameRoomRepository.ConvertToRoomList(jsonString);
@@ -524,6 +580,11 @@ namespace Game_Client_Forms
         public string GetClientName()
         {
             return _clientSocketHandler.Name;
+        }
+
+        public UserRepository GetUserRepository()
+        {
+            return this._userRepository;
         }
     }
 }

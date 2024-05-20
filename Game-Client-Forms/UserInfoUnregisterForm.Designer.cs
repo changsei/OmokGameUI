@@ -35,11 +35,12 @@
             pnlLogo = new Panel();
             lblGuide = new Label();
             lblVersion = new Label();
+            chkBoxShowPassword = new CheckBox();
             SuspendLayout();
             // 
             // btnBackHome
             // 
-            btnBackHome.Location = new Point(86, 445);
+            btnBackHome.Location = new Point(86, 458);
             btnBackHome.Name = "btnBackHome";
             btnBackHome.Size = new Size(290, 38);
             btnBackHome.TabIndex = 61;
@@ -49,20 +50,23 @@
             // 
             // btnUnregister
             // 
-            btnUnregister.Location = new Point(86, 401);
+            btnUnregister.Location = new Point(86, 414);
             btnUnregister.Name = "btnUnregister";
             btnUnregister.Size = new Size(290, 38);
             btnUnregister.TabIndex = 59;
             btnUnregister.Text = "회원 탈퇴";
             btnUnregister.UseVisualStyleBackColor = true;
+            btnUnregister.Enabled = false;
             btnUnregister.Click += btnUnregister_Click;
             // 
             // tBoxUserPassword
             // 
             tBoxUserPassword.Location = new Point(86, 342);
             tBoxUserPassword.Name = "tBoxUserPassword";
+            tBoxUserPassword.PasswordChar = '*';
             tBoxUserPassword.Size = new Size(290, 31);
             tBoxUserPassword.TabIndex = 58;
+            tBoxUserPassword.TextChanged += UserInfoUnRegistForm_TextChanged;
             // 
             // tBoxUserId
             // 
@@ -70,6 +74,7 @@
             tBoxUserId.Name = "tBoxUserId";
             tBoxUserId.Size = new Size(290, 31);
             tBoxUserId.TabIndex = 57;
+            tBoxUserId.TextChanged += UserInfoUnRegistForm_TextChanged;
             // 
             // pnlLogo
             // 
@@ -83,11 +88,11 @@
             // 
             lblGuide.AutoSize = true;
             lblGuide.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            lblGuide.Location = new Point(86, 495);
+            lblGuide.Location = new Point(86, 508);
             lblGuide.Name = "lblGuide";
-            lblGuide.Size = new Size(262, 25);
+            lblGuide.Size = new Size(208, 25);
             lblGuide.TabIndex = 55;
-            lblGuide.Text = "원하시는 버튼을 클릭해주세요.";
+            lblGuide.Text = "계정 입력이 필요합니다.";
             // 
             // lblVersion
             // 
@@ -99,12 +104,24 @@
             lblVersion.TabIndex = 54;
             lblVersion.Text = "Omok ver.1.0";
             // 
+            // chkBoxShowPassword
+            // 
+            chkBoxShowPassword.AutoSize = true;
+            chkBoxShowPassword.Location = new Point(224, 379);
+            chkBoxShowPassword.Name = "chkBoxShowPassword";
+            chkBoxShowPassword.Size = new Size(152, 29);
+            chkBoxShowPassword.TabIndex = 62;
+            chkBoxShowPassword.Text = "비밀번호 보기";
+            chkBoxShowPassword.UseVisualStyleBackColor = true;
+            chkBoxShowPassword.CheckStateChanged += chkBoxShowPassword_CheckStateChanged;
+            // 
             // UserInfoUnregisterForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(458, 664);
+            Controls.Add(chkBoxShowPassword);
             Controls.Add(btnBackHome);
             Controls.Add(btnUnregister);
             Controls.Add(tBoxUserPassword);
@@ -131,5 +148,6 @@
         private Panel pnlLogo;
         private Label lblGuide;
         private Label lblVersion;
+        private CheckBox chkBoxShowPassword;
     }
 }

@@ -47,8 +47,56 @@ namespace Game_Client_Forms
                 Destination = "DATABASE",
                 RequestType = "UNREGIST_USER_ID/PW",
                 Name = _client.GetClientName(),
-                Text = tBoxUserId.Text + "," + tBoxUserPassword.Text
+                Text = _client.GetUserRepository().ConvertUserToJson(new User
+                {
+                    ID = tBoxUserId.Text,
+                    Password = tBoxUserPassword.Text
+                })
             });
+        }
+
+        private void chkBoxShowPassword_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (chkBoxShowPassword.Checked == true)
+            {
+                tBoxUserPassword.PasswordChar = default(char);
+            }
+            else
+            {
+                tBoxUserPassword.PasswordChar = '*';
+            }
+        }
+
+        private void UserInfoUnRegistForm_TextChanged(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)((() => UpdateUnregistUserPasswordButtonStateAndGuide())));
+        }
+
+        private void UpdateUnregistUserPasswordButtonStateAndGuide()
+        {
+            bool isUserIdFilled = !string.IsNullOrWhiteSpace(tBoxUserId.Text);
+            bool isUserPasswordFilled = !string.IsNullOrWhiteSpace(tBoxUserPassword.Text);
+
+            if (isUserPasswordFilled && isUserPasswordFilled)
+            {
+                btnUnregister.Enabled = true;
+                lblGuide.Text = "계정 탈퇴 시도가 가능합니다.";
+            }
+            else
+            {
+                btnUnregister.Enabled = false;
+                if (!isUserIdFilled)
+                {
+                    lblGuide.Text = "계정 입력이 필요합니다.";
+                    return;
+                }
+
+                if (!isUserPasswordFilled)
+                {
+                    lblGuide.Text = "비밀번호 입력이 필요합니다.";
+                    return;
+                }
+            }
         }
     }
 }

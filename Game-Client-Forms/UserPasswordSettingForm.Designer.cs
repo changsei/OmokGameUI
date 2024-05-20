@@ -35,6 +35,7 @@
             tBoxUserPassword = new TextBox();
             btnRegisterPassword = new Button();
             btnBackHome = new Button();
+            chkBoxShowPassword = new CheckBox();
             SuspendLayout();
             // 
             // pnlLogo
@@ -49,11 +50,11 @@
             // 
             lblGuide.AutoSize = true;
             lblGuide.Font = new Font("맑은 고딕", 9F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            lblGuide.Location = new Point(94, 530);
+            lblGuide.Location = new Point(94, 503);
             lblGuide.Name = "lblGuide";
-            lblGuide.Size = new Size(262, 25);
+            lblGuide.Size = new Size(244, 25);
             lblGuide.TabIndex = 45;
-            lblGuide.Text = "원하시는 버튼을 클릭해주세요.";
+            lblGuide.Text = "비밀번호 입력이 필요합니다.";
             // 
             // lblVersion
             // 
@@ -69,21 +70,24 @@
             // 
             tboxConfirmUserPassword.Location = new Point(94, 346);
             tboxConfirmUserPassword.Name = "tboxConfirmUserPassword";
+            tboxConfirmUserPassword.PasswordChar = '*';
             tboxConfirmUserPassword.Size = new Size(290, 31);
             tboxConfirmUserPassword.TabIndex = 48;
-            tboxConfirmUserPassword.Text = "비밀번호 확인이 필요합니다.";
+            tboxConfirmUserPassword.TextChanged += UserPasswordSettingsForm_TextChanged;
             // 
             // tBoxUserPassword
             // 
             tBoxUserPassword.Location = new Point(94, 309);
             tBoxUserPassword.Name = "tBoxUserPassword";
+            tBoxUserPassword.PasswordChar = '*';
             tBoxUserPassword.Size = new Size(290, 31);
             tBoxUserPassword.TabIndex = 47;
-            tBoxUserPassword.Text = "비밀번호가 필요 합니다.";
+            tBoxUserPassword.TextChanged += UserPasswordSettingsForm_TextChanged;
             // 
             // btnRegisterPassword
             // 
-            btnRegisterPassword.Location = new Point(94, 445);
+            btnRegisterPassword.Enabled = false;
+            btnRegisterPassword.Location = new Point(94, 418);
             btnRegisterPassword.Name = "btnRegisterPassword";
             btnRegisterPassword.Size = new Size(290, 38);
             btnRegisterPassword.TabIndex = 49;
@@ -93,7 +97,7 @@
             // 
             // btnBackHome
             // 
-            btnBackHome.Location = new Point(94, 489);
+            btnBackHome.Location = new Point(94, 462);
             btnBackHome.Name = "btnBackHome";
             btnBackHome.Size = new Size(290, 38);
             btnBackHome.TabIndex = 51;
@@ -101,12 +105,24 @@
             btnBackHome.UseVisualStyleBackColor = true;
             btnBackHome.Click += btnBackHome_Click;
             // 
+            // chkBoxShowPassword
+            // 
+            chkBoxShowPassword.AutoSize = true;
+            chkBoxShowPassword.Location = new Point(232, 383);
+            chkBoxShowPassword.Name = "chkBoxShowPassword";
+            chkBoxShowPassword.Size = new Size(152, 29);
+            chkBoxShowPassword.TabIndex = 63;
+            chkBoxShowPassword.Text = "비밀번호 보기";
+            chkBoxShowPassword.UseVisualStyleBackColor = true;
+            chkBoxShowPassword.CheckedChanged += chkBoxShowPassword_CheckedChanged;
+            // 
             // UserPasswordSettingForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(458, 664);
+            Controls.Add(chkBoxShowPassword);
             Controls.Add(btnBackHome);
             Controls.Add(btnRegisterPassword);
             Controls.Add(tboxConfirmUserPassword);
@@ -118,6 +134,7 @@
             Name = "UserPasswordSettingForm";
             Text = "UserPasswordSettingForm";
             FormClosed += UserPasswordSettingForm_FormClosed;
+            Load += UserPasswordSettingForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -130,5 +147,6 @@
         private TextBox tBoxUserPassword;
         private Button btnRegisterPassword;
         private Button btnBackHome;
+        private CheckBox chkBoxShowPassword;
     }
 }

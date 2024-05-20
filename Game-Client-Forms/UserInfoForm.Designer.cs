@@ -52,6 +52,7 @@
             tBoxUserPhoneNumber.Name = "tBoxUserPhoneNumber";
             tBoxUserPhoneNumber.Size = new Size(290, 31);
             tBoxUserPhoneNumber.TabIndex = 34;
+            tBoxUserPhoneNumber.TextChanged += tBoxUserPhoneNumber_TextChanged;
             // 
             // lblVersion
             // 
@@ -65,6 +66,7 @@
             // 
             // btnSeachUserPassword
             // 
+            btnSeachUserPassword.Enabled = false;
             btnSeachUserPassword.Location = new Point(94, 336);
             btnSeachUserPassword.Name = "btnSeachUserPassword";
             btnSeachUserPassword.Size = new Size(290, 38);
@@ -79,6 +81,7 @@
             tBoxUserId.Name = "tBoxUserId";
             tBoxUserId.Size = new Size(290, 31);
             tBoxUserId.TabIndex = 31;
+            tBoxUserId.TextChanged += tBoxUserId_TextChanged;
             // 
             // lblGuide
             // 
@@ -92,6 +95,7 @@
             // 
             // btnSearchUserId
             // 
+            btnSearchUserId.Enabled = false;
             btnSearchUserId.Location = new Point(94, 465);
             btnSearchUserId.Name = "btnSearchUserId";
             btnSearchUserId.Size = new Size(290, 38);

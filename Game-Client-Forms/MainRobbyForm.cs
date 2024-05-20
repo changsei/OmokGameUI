@@ -74,7 +74,7 @@ namespace Game_Client_Forms
                 Name = _client.GetClientName(),
                 Text = tBoxUserChat.Text
             });
-            string myChatLog = "[나] : " + tBoxUserChat.Text;
+            string myChatLog = $"[나]: {tBoxUserChat.Text}";
             ShowMainRobbyChatLog(myChatLog);
         }
 
@@ -85,7 +85,7 @@ namespace Game_Client_Forms
                 Destination = "GAME_ROOM",
                 RequestType = "ENTERANCE_GAME_ROOM",
                 Name = _client.GetClientName(),
-                Text = _client.GetGameRoomRepository().ConvertGameRoomToJson(_client.GetGameRoomRepository().GetRoom("ROOM1"))
+                Text = "ROOM1"
             });
         }
 
@@ -96,7 +96,7 @@ namespace Game_Client_Forms
                 Destination = "GAME_ROOM",
                 RequestType = "ENTERANCE_GAME_ROOM",
                 Name = _client.GetClientName(),
-                Text = _client.GetGameRoomRepository().ConvertGameRoomToJson(_client.GetGameRoomRepository().GetRoom("ROOM2"))
+                Text = "ROOM2"
             });
         }
 
@@ -107,7 +107,7 @@ namespace Game_Client_Forms
                 Destination = "GAME_ROOM",
                 RequestType = "ENTERANCE_GAME_ROOM",
                 Name = _client.GetClientName(),
-                Text = _client.GetGameRoomRepository().ConvertGameRoomToJson(_client.GetGameRoomRepository().GetRoom("ROOM3"))
+                Text = "ROOM3"
             });
         }
 

@@ -50,6 +50,7 @@ namespace Game_Client_Forms
             btnLogin.Size = new Size(106, 71);
             btnLogin.TabIndex = 0;
             btnLogin.Text = "Login";
+            btnLogin.Enabled = false;
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 
@@ -99,13 +100,16 @@ namespace Game_Client_Forms
             tBoxUserId.Name = "tBoxUserId";
             tBoxUserId.Size = new Size(278, 31);
             tBoxUserId.TabIndex = 3;
+            tBoxUserId.TextChanged += tBoxUserId_TextChanged;
             // 
             // tBoxUserPassword
             // 
             tBoxUserPassword.Location = new Point(34, 408);
             tBoxUserPassword.Name = "tBoxUserPassword";
+            tBoxUserPassword.PasswordChar = '*';
             tBoxUserPassword.Size = new Size(278, 31);
             tBoxUserPassword.TabIndex = 10;
+            tBoxUserPassword.TextChanged += tBoxUserPassword_TextChanged;
             // 
             // pnlLogo
             // 

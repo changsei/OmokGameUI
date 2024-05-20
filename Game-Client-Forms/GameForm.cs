@@ -22,6 +22,11 @@ namespace Game_Client_Forms
             _client = Client.Instance;
         }
 
+        private void GameForm_Load(object sender, EventArgs e)
+        {
+            tBoxUserChat.PlaceholderText = "여기에 채팅 내용을 입력해주세요.";
+        }
+
         private void btnBackward_Click(object sender, EventArgs e)
         {
             _client.SendToServer(() => new Message
@@ -29,13 +34,21 @@ namespace Game_Client_Forms
                 Name = _client.GetClientName(),
                 Destination = "GAME_ROOM",
                 RequestType = "EXIT_GAME_ROOM",
-                Text = _client.GetGameRoomRepository().ConvertGameRoomToJson(_currentRoom)
+                Text = _currentRoom.Name
             });
         }
 
         private void btnInputUserChat_Click(object sender, EventArgs e)
         {
-
+            _client.SendToServer(() => new Message
+            {
+                Destination = "GAME_ROOM",
+                RequestType = "CHAT",
+                Name = _client.GetClientName(),
+                Text = tBoxUserChat.Text
+            });
+            string myChatLog = $"[나]: {tBoxUserChat.Text}";
+            ShowGameRoomChatLog(myChatLog);
         }
 
         private void btnSurrender_Click(object sender, EventArgs e)
@@ -46,6 +59,12 @@ namespace Game_Client_Forms
         private void btnReady_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public void ShowGameRoomChatLog(string chatLog)
+        {
+            richBoxUserChatLog.AppendText(chatLog + Environment.NewLine);
+            Application.DoEvents();
         }
 
         public GameRoom GetCurrentGameRoom()
