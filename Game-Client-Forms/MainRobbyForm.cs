@@ -21,6 +21,7 @@ namespace Game_Client_Forms
         private Label[] _lblRoomMainUserNames;
         private Label[] _lblRoomSubUserNames;
         private Label[] _lblRoomUseStatus;
+        private Button[] _btnEnteranceGameRooms;
         private const int _maxLblSize = 3;
 
         public MainRobbyForm()
@@ -32,6 +33,7 @@ namespace Game_Client_Forms
             _lblRoomMainUserNames = new Label[_maxLblSize];
             _lblRoomSubUserNames = new Label[_maxLblSize];
             _lblRoomUseStatus = new Label[_maxLblSize];
+            _btnEnteranceGameRooms = new Button[_maxLblSize];
 
             for (int i = 0; i < _maxLblSize; i++)
             {
@@ -39,6 +41,7 @@ namespace Game_Client_Forms
                 _lblRoomMainUserNames[i] = (Label)Controls.Find($"lblRoomMainUserName{i + 1}", true)[0];
                 _lblRoomSubUserNames[i] = (Label)Controls.Find($"lblRoomSubUserName{i + 1}", true)[0];
                 _lblRoomUseStatus[i] = (Label)Controls.Find($"lblRoomUseStatus{i + 1}", true)[0];
+                _btnEnteranceGameRooms[i] = (Button)Controls.Find($"btnEnteranceRoom{i + 1}", true)[0];
             }
         }
 
@@ -120,9 +123,8 @@ namespace Game_Client_Forms
                 _lblRoomMainUserNames[i].Text = gameRoom.MainUser;
                 _lblRoomSubUserNames[i].Text = gameRoom.SubUser;
                 _lblRoomUseStatus[i].Text = gameRoom.State == true ? "입장가능" : "입장불가";
+                _btnEnteranceGameRooms[i].Enabled = gameRoom.State == true ? true : false;
                 i++;
-
-                Console.WriteLine(gameRoom.MainUser + ": " + gameRoom.SubUser);
             }
 
             Application.DoEvents();

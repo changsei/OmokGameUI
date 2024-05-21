@@ -76,6 +76,17 @@ namespace Game_Client_Forms
                 case "GAMEROOM_RENEW_RESPONSE":
                     Invoke((MethodInvoker)(() => ProcessGameRoomRenewResponse(message.Text)));
                     break;
+                case "READY_TO_GAME_RESPONSE":
+                case "START_TO_GAME_RESPONSE":
+                case "SURRENDER_RESPONSE":
+                    Invoke((MethodInvoker)(() => ProcessSetGameRoomResponse(message.Text)));
+                    break;
+                case "MOVE_STONE_RESPONSE":
+                    Invoke((MethodInvoker)(() => ProcessMoveStoneResponse(message.Text)));
+                    break;
+                case "GMAE_ROOM_WINNER_RESPONSE":
+                    Invoke((MethodInvoker)(() => ProcessGameRoomWinnerResponse(message.Text)));
+                    break;
                 case "LOGIN_RESPONSE":
                     if (message.Text.Equals("ACCEPT_NORMAL_USER"))
                     {
@@ -282,6 +293,12 @@ namespace Game_Client_Forms
 
             if (_gameform != null)
             {
+                if (_gameform.GetCurrentGameRoom().CheckReadyToStart())
+                {
+                    string textWrite = $"[승자]: 당신";
+                    _gameform.ShowGameRoomSystemLog(textWrite);
+                    _gameform.ShowGameRoomSystemLog($"[게임] 종료");
+                }
                 _gameform.SetCurrentGameRoom(gameRoom);
             }
         }
@@ -309,6 +326,12 @@ namespace Game_Client_Forms
             _gameform.ShowGameRoomChatLog(text);
         }
 
+        private void ProcessMoveStoneResponse(string text)
+        {
+            GameMove gameMove = _client.GetGameRoomRepository().ConvertJsonToGameMove(text);
+            _gameform.DrawStonOnBoard(gameMove.X, gameMove.Y);
+        }
+
         private void ProcessSearchPasswordRespnose()
         {
             _userInfoForm.Hide();
@@ -328,6 +351,20 @@ namespace Game_Client_Forms
                 _userInfounregisterform = new UserInfoUnregisterForm();
             }
             _userInfounregisterform.Show();
+        }
+
+        private void ProcessSetGameRoomResponse(string text)
+        {
+            GameRoom gameRoom = _client.GetGameRoomRepository().ConvertJsonToGameRoom(text);
+            _gameform.SetCurrentGameRoom(gameRoom);
+        }
+
+        private void ProcessGameRoomWinnerResponse(string text)
+        {
+
+            string textWrite = $"[승자]: {text}";
+            _gameform.ShowGameRoomSystemLog($"[게임] 종료");
+            _gameform.ShowGameRoomSystemLog(textWrite);
         }
 
         private void GameForm_FormClosed(object? sender, FormClosedEventArgs e)
@@ -385,7 +422,7 @@ namespace Game_Client_Forms
             _client.ConnectToServer();
             _client.SendToServer(() => new Message
             {
-                Name = tBoxUserId.Text,
+                Name = "DEFAULT",
                 RequestType = "LOGIN",
                 Destination = "DATABASE",
                 Text = _client.GetUserRepository().ConvertUserToJson(new Forms_Model.User

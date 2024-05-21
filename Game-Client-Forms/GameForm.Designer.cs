@@ -64,8 +64,10 @@
             pnlGameBoard.BorderStyle = BorderStyle.FixedSingle;
             pnlGameBoard.Location = new Point(34, 16);
             pnlGameBoard.Name = "pnlGameBoard";
-            pnlGameBoard.Size = new Size(719, 612);
+            pnlGameBoard.Size = new Size(641, 612);
             pnlGameBoard.TabIndex = 24;
+            pnlGameBoard.Paint += pnlGameBoard_Paint;
+            pnlGameBoard.MouseDown += pnlGameBoard_MouseDown;
             // 
             // pnlLog
             // 
@@ -74,24 +76,24 @@
             pnlLog.Controls.Add(btnInputUserChat);
             pnlLog.Controls.Add(tBoxUserChat);
             pnlLog.Controls.Add(richBoxUserChatLog);
-            pnlLog.Location = new Point(777, 203);
+            pnlLog.Location = new Point(694, 200);
             pnlLog.Name = "pnlLog";
-            pnlLog.Size = new Size(454, 425);
+            pnlLog.Size = new Size(537, 428);
             pnlLog.TabIndex = 23;
             // 
             // richBoxGameLog
             // 
             richBoxGameLog.BackColor = SystemColors.ButtonHighlight;
-            richBoxGameLog.Location = new Point(22, 16);
+            richBoxGameLog.Location = new Point(18, 21);
             richBoxGameLog.Name = "richBoxGameLog";
             richBoxGameLog.ReadOnly = true;
-            richBoxGameLog.Size = new Size(103, 331);
+            richBoxGameLog.Size = new Size(181, 328);
             richBoxGameLog.TabIndex = 23;
             richBoxGameLog.Text = "";
             // 
             // btnInputUserChat
             // 
-            btnInputUserChat.Location = new Point(369, 353);
+            btnInputUserChat.Location = new Point(452, 361);
             btnInputUserChat.Name = "btnInputUserChat";
             btnInputUserChat.Size = new Size(68, 38);
             btnInputUserChat.TabIndex = 22;
@@ -101,18 +103,18 @@
             // 
             // tBoxUserChat
             // 
-            tBoxUserChat.Location = new Point(22, 357);
+            tBoxUserChat.Location = new Point(18, 368);
             tBoxUserChat.Name = "tBoxUserChat";
-            tBoxUserChat.Size = new Size(341, 31);
+            tBoxUserChat.Size = new Size(430, 31);
             tBoxUserChat.TabIndex = 1;
             // 
             // richBoxUserChatLog
             // 
             richBoxUserChatLog.BackColor = SystemColors.ButtonHighlight;
-            richBoxUserChatLog.Location = new Point(131, 16);
+            richBoxUserChatLog.Location = new Point(214, 21);
             richBoxUserChatLog.Name = "richBoxUserChatLog";
             richBoxUserChatLog.ReadOnly = true;
-            richBoxUserChatLog.Size = new Size(306, 331);
+            richBoxUserChatLog.Size = new Size(306, 328);
             richBoxUserChatLog.TabIndex = 0;
             richBoxUserChatLog.Text = "";
             // 
@@ -129,15 +131,15 @@
             pnlUserStatus.Controls.Add(btnBackward);
             pnlUserStatus.Controls.Add(btnSurrender);
             pnlUserStatus.Controls.Add(btnReady);
-            pnlUserStatus.Location = new Point(777, 16);
+            pnlUserStatus.Location = new Point(694, 16);
             pnlUserStatus.Name = "pnlUserStatus";
-            pnlUserStatus.Size = new Size(454, 163);
+            pnlUserStatus.Size = new Size(537, 163);
             pnlUserStatus.TabIndex = 22;
             // 
             // lblSubUserReady
             // 
             lblSubUserReady.AutoSize = true;
-            lblSubUserReady.Location = new Point(131, 112);
+            lblSubUserReady.Location = new Point(165, 112);
             lblSubUserReady.Name = "lblSubUserReady";
             lblSubUserReady.Size = new Size(62, 25);
             lblSubUserReady.TabIndex = 26;
@@ -155,7 +157,7 @@
             // lblSubUserName
             // 
             lblSubUserName.AutoSize = true;
-            lblSubUserName.Location = new Point(131, 68);
+            lblSubUserName.Location = new Point(165, 68);
             lblSubUserName.Name = "lblSubUserName";
             lblSubUserName.Size = new Size(98, 25);
             lblSubUserName.TabIndex = 24;
@@ -173,7 +175,7 @@
             // lblSubUser
             // 
             lblSubUser.AutoSize = true;
-            lblSubUser.Location = new Point(131, 24);
+            lblSubUser.Location = new Point(165, 24);
             lblSubUser.Name = "lblSubUser";
             lblSubUser.Size = new Size(86, 25);
             lblSubUser.TabIndex = 22;
@@ -190,7 +192,7 @@
             // 
             // btnBackward
             // 
-            btnBackward.Location = new Point(257, 105);
+            btnBackward.Location = new Point(340, 105);
             btnBackward.Name = "btnBackward";
             btnBackward.Size = new Size(180, 38);
             btnBackward.TabIndex = 20;
@@ -200,7 +202,7 @@
             // 
             // btnSurrender
             // 
-            btnSurrender.Location = new Point(257, 61);
+            btnSurrender.Location = new Point(340, 61);
             btnSurrender.Name = "btnSurrender";
             btnSurrender.Size = new Size(180, 38);
             btnSurrender.TabIndex = 19;
@@ -210,7 +212,7 @@
             // 
             // btnReady
             // 
-            btnReady.Location = new Point(257, 17);
+            btnReady.Location = new Point(340, 17);
             btnReady.Name = "btnReady";
             btnReady.Size = new Size(180, 38);
             btnReady.TabIndex = 18;
