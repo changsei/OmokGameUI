@@ -45,8 +45,8 @@ namespace Socket_Handler
             _gameRoomRepository = new GameRoomRepository();
             _userRepository = new UserRepository();
             _messages = new Queue<Message>();
-            _port = 50000;
-            _ip = "223.130.152.245";
+            _port = 8080; // 접속할 주소의 포트 번호
+            _ip = "접속할 주소의 IP";
             _messagesLock = new object();
         }
 
@@ -59,7 +59,7 @@ namespace Socket_Handler
                 MessageReceived?.Invoke(message);
             }
         }
-
+        // 연결 세팅을 도와주는 함수 
         public void ConnectToServer()
         {
             try
