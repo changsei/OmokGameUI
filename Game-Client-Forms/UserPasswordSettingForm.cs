@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Message = Forms_Model.Message;
+using Socket_Handler;
+using Message = Model.Message;
 
 namespace Game_Client_Forms
 {
@@ -48,7 +49,7 @@ namespace Game_Client_Forms
                 Destination = "DATABASE",
                 RequestType = "RENEW_USER_PASSWORD",
                 Name = _client.GetClientName(),
-                Text = _client.GetUserRepository().ConvertUserToJson(new Forms_Model.User
+                Text = _client.GetUserRepository().ConvertUserToJson(new Model.User
                 {
                     ID = _client.GetUserRepository().GetUserBuffer(),
                     Password = tboxConfirmUserPassword.Text

@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game-Client-Forms", "Game-Client-Forms\Game-Client-Forms.csproj", "{52B2CDF3-AF11-432F-BE73-42277B453A91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game-Client-Forms", "Game-Client-Forms\Game-Client-Forms.csproj", "{52B2CDF3-AF11-432F-BE73-42277B453A91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Socket-Handler", "Socket-Handler\Socket-Handler.csproj", "{2FCD57BB-F814-47B5-9926-CC13D9B57156}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{E47F7162-23DC-4778-A326-9C161331B698}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{B0576345-1106-4EED-89DE-CA8A64103E37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Omok-Game", "Omok-Game\Omok-Game.csproj", "{C2BB532C-42BB-4830-A772-6B55CFCDA2F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{52B2CDF3-AF11-432F-BE73-42277B453A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52B2CDF3-AF11-432F-BE73-42277B453A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52B2CDF3-AF11-432F-BE73-42277B453A91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FCD57BB-F814-47B5-9926-CC13D9B57156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FCD57BB-F814-47B5-9926-CC13D9B57156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FCD57BB-F814-47B5-9926-CC13D9B57156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FCD57BB-F814-47B5-9926-CC13D9B57156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47F7162-23DC-4778-A326-9C161331B698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47F7162-23DC-4778-A326-9C161331B698}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47F7162-23DC-4778-A326-9C161331B698}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47F7162-23DC-4778-A326-9C161331B698}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0576345-1106-4EED-89DE-CA8A64103E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0576345-1106-4EED-89DE-CA8A64103E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0576345-1106-4EED-89DE-CA8A64103E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0576345-1106-4EED-89DE-CA8A64103E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2BB532C-42BB-4830-A772-6B55CFCDA2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2BB532C-42BB-4830-A772-6B55CFCDA2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2BB532C-42BB-4830-A772-6B55CFCDA2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2BB532C-42BB-4830-A772-6B55CFCDA2F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

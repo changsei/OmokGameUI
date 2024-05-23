@@ -1,17 +1,17 @@
 
 
-using Socket_Handler_Form;
+using Socket_Handler;
 using System.Net.Sockets;
 using System.Net;
 using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Forms.Application;
 using Microsoft.VisualBasic.ApplicationServices;
-using  Forms_Model;
-using Message = Forms_Model.Message;
+using Model;
+using Message = Model.Message;
 using System.Windows.Forms;
 using System.Net.WebSockets;
-using Form_Repository;
-using User = Forms_Model.User;
+using Repository;
+using User = Model.User;
 
 namespace Game_Client_Forms
 {
@@ -61,8 +61,9 @@ namespace Game_Client_Forms
                     if (message.Destination.Equals("MAIN_ROBBY"))
                     {
                         Invoke((MethodInvoker)(() => ProcessAllChatResponse(message.Text)));
+                        break;
                     }
-                    else if (message.Destination.Equals("GAME_ROOM"))
+                    if (message.Destination.Equals("GAME_ROOM"))
                     {
                         Invoke((MethodInvoker)(() => ProcessChatResponse(message.Text)));
                     }
@@ -90,8 +91,9 @@ namespace Game_Client_Forms
                 case "LOGIN_RESPONSE":
                     if (message.Text.Equals("ACCEPT_NORMAL_USER"))
                     {
-                        _logger.Log(Logger.LogLevel.Info, "로그인 되었습니다.");
+                        _logger.Log(Logger.LogLevel.Info, "[로그인]: 로그인 되었습니다.");
                         Invoke((MethodInvoker)(() => ProcessLoginResponse()));
+                        break;
                     }
                     else
                     {
@@ -101,74 +103,65 @@ namespace Game_Client_Forms
                             Invoke((MethodInvoker)(() => _mainRobbyform.RenewMainRobby()));
                             break;
                         }
-                        else
-                        {
-                            _logger.Log(Logger.LogLevel.Info, "해당하는 회원이 없습니다.");
-                            _client.DisConnectToServer();
-                        }
+                        _logger.Log(Logger.LogLevel.Error, "[로그인]: 해당 유저가 없습니다.");
+                        _client.DisConnectToServer();
                     }
                     break;
                 case "REGIST_RESPONSE":
                     if (message.Text.Equals("CONNECTED"))
                     {
                         Invoke((MethodInvoker)(() => ProcessRegistResponse()));
+                        break;
                     }
-                    else if (message.Text.Equals("COMPLETED"))
+                    if (message.Text.Equals("COMPLETED"))
                     {
-                        _logger.Log(Logger.LogLevel.Info, "등록이 완료 되었습니다.");
+                        _logger.Log(Logger.LogLevel.Info, "[계정 등록]: 계정이 등록 되었습니다.");
+                        break;
                     }
-                    else
-                    {
-                        _logger.Log(Logger.LogLevel.Info, "계정 중복 입니다.");
-                    }
+                    _logger.Log(Logger.LogLevel.Info, "[계정 등록]: 중복된 계정 입니다.");
                     break;
                 case "SEARCH_RESPONSE":
                     if (message.Text.Equals("CONNECTED"))
                     {
                         Invoke((MethodInvoker)((() => ProcessSearchResponse())));
+                        break;
                     }
-                    else if (message.Text.Equals("REFUSED"))
+                    if (message.Text.Equals("REFUSED"))
                     {
-                        _logger.Log(Logger.LogLevel.Info, "해당하는 정보가 없습니다.");
+                        _logger.Log(Logger.LogLevel.Info, "[계정 조회]: 해당 계정이 없습니다.");
+                        break;
                     }
-                    else
+                    if (message.Destination.Equals("ID_FORM"))
                     {
-                        if (message.Destination.Equals("ID_FORM"))
-                        {
-                            Invoke((MethodInvoker)((() => ProcessSearchIdResponse(message.Text))));
-                            break;
-                        }
-
-                        if (message.Destination.Equals("PASSWORD_FORM"))
-                        {
-                            Invoke((MethodInvoker)((() => ProcessSearchPasswordRespnose())));
-                            break;
-                        }
+                        Invoke((MethodInvoker)((() => ProcessSearchIdResponse(message.Text))));
+                        break;
+                    }
+                    if (message.Destination.Equals("PASSWORD_FORM"))
+                    {
+                        Invoke((MethodInvoker)((() => ProcessSearchPasswordRespnose())));
+                        break;
                     }
                     break;
                 case "UNREGIST_RESPONSE":
                     if (message.Text.Equals("CONNECTED"))
                     {
                         Invoke((MethodInvoker)((() => ProcessUnRegisterResponse())));
+                        break;
                     }
-                    else if (message.Text.Equals("COMPLETED"))
+                    if (message.Text.Equals("COMPLETED"))
                     {
-                        _logger.Log(Logger.LogLevel.Info, "삭제가 완료 되었습니다.");
+                        _logger.Log(Logger.LogLevel.Info, "[계정 삭제]: 삭제가 완료 되었습니다.");
+                        break;
                     }
-                    else
-                    {
-                        _logger.Log(Logger.LogLevel.Info, "계정 정보가 잘못 되었습니다.");
-                    }
+                    _logger.Log(Logger.LogLevel.Info, "[계정 삭제]: 삭제할 계정이 없습니다.");
                     break;
                 case "RENEW_RESPONSE":
                     if (message.Text.Equals("COMPLETED"))
                     {
-                        _logger.Log(Logger.LogLevel.Info, "비밀 번호 변경이 완료 되었습니다.");
+                        _logger.Log(Logger.LogLevel.Info, "[비밀번호 변경]: 변경이 완료 되었습니다.");
+                        break;
                     }
-                    else
-                    {
-                        _logger.Log(Logger.LogLevel.Info, "비밀 번호 변경에 실패 했습니다.");
-                    }
+                    _logger.Log(Logger.LogLevel.Info, "[비밀번호 변경]: 변경에 실패 했습니다.");
                     break;
                 default:
                     break;
@@ -276,7 +269,17 @@ namespace Game_Client_Forms
                 _gameform.FormClosed += GameForm_FormClosed;
             }
 
-            _gameform.SetCurrentGameRoom(gameRoom);
+            // 여러 게임 방이 활성화 되었을 때 로직 처리
+            if (_gameform.GetCurrentGameRoom() == null)
+            {
+                _gameform.SetCurrentGameRoom(gameRoom);
+            }
+
+            if (_gameform.GetCurrentGameRoom().Name.Equals(gameRoom.Name))
+            {
+                _gameform.SetCurrentGameRoom(gameRoom);
+            }
+
             _gameform.Show();
         }
 
@@ -297,9 +300,12 @@ namespace Game_Client_Forms
                 {
                     string textWrite = $"[승자]: 당신";
                     _gameform.ShowGameRoomSystemLog(textWrite);
-                    _gameform.ShowGameRoomSystemLog($"[게임] 종료");
+                    _gameform.ShowGameRoomSystemLog($"[게임]: 종료");
                 }
-                _gameform.SetCurrentGameRoom(gameRoom);
+
+                if (_gameform.GetCurrentGameRoom().Name.Equals(gameRoom.Name)) {
+                    _gameform.SetCurrentGameRoom(gameRoom);
+                }
             }
         }
 
@@ -363,8 +369,8 @@ namespace Game_Client_Forms
         {
 
             string textWrite = $"[승자]: {text}";
-            _gameform.ShowGameRoomSystemLog($"[게임] 종료");
             _gameform.ShowGameRoomSystemLog(textWrite);
+            _gameform.ShowGameRoomSystemLog($"[게임]: 종료");
         }
 
         private void GameForm_FormClosed(object? sender, FormClosedEventArgs e)
@@ -425,7 +431,7 @@ namespace Game_Client_Forms
                 Name = "DEFAULT",
                 RequestType = "LOGIN",
                 Destination = "DATABASE",
-                Text = _client.GetUserRepository().ConvertUserToJson(new Forms_Model.User
+                Text = _client.GetUserRepository().ConvertUserToJson(new Model.User
                 {
                     ID = tBoxUserId.Text,
                     Password = tBoxUserPassword.Text
@@ -443,11 +449,6 @@ namespace Game_Client_Forms
             });
         }
         private void tBoxUserId_TextChanged(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)((() => CheckTextBoxForLogin())));
-        }
-
-        private void tBoxUserPassword_TextChanged(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)((() => CheckTextBoxForLogin())));
         }
@@ -470,158 +471,6 @@ namespace Game_Client_Forms
 
             lblGuide.Text = "로그인 시도가 가능합니다.";
             btnLogin.Enabled = true;
-        }
-    }
-
-    public class ClientSocketHandler : SocketHandler
-    {
-        public override void Parse(string jsonString)
-        {
-            Message message = ConvertToMessage(jsonString);
-
-            if (message.RequestType.Equals("CONNECT"))
-            {
-                Send(CreateTheData(message));
-                return;
-            }
-
-            if (message.RequestType.Equals("LOGIN_RESPONSE"))
-            {
-                this.Name = message.Name;
-                EnqueueMessage(message);
-                return;
-            }
-
-            if (message.RequestType.Equals("SEARCH_RESPONSE"))
-            {
-                this.Name = message.Name;
-                EnqueueMessage(message);
-                return;
-            }
-
-            if (message.RequestType.Equals("REGIST_RESPONSE"))
-            {
-                this.Name = message.Name;
-                EnqueueMessage(message);
-                return;
-            }
-
-            if (message.RequestType.Equals("UNREGIST_RESPONSE"))
-            {
-                this.Name = message.Name;
-                EnqueueMessage(message);
-                return;
-            }
-
-            EnqueueMessage(message);
-        }
-    }
-
-    public class Client : Observer
-    {
-        private static Client? _instance;
-        public event Action<Message> MessageReceived;
-        private GameRoomRepository _gameRoomRepository;
-        private UserRepository _userRepository;
-        private ClientSocketHandler _clientSocketHandler;
-        private Queue<Message> _messages;
-        private Socket _socket;
-        private IPEndPoint _endPoint;
-        private int _port;
-        private Logger _logger;
-        private object _messagesLock;
-
-        public static Client Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new Client();
-                }
-                return _instance;
-            }
-        }
-
-        private Client()
-        {
-            _logger = Logger.Instance;
-            _clientSocketHandler = new ClientSocketHandler();
-            _gameRoomRepository = new GameRoomRepository();
-            _userRepository = new UserRepository(); 
-            _messages = new Queue<Message>();
-            _port = 8080;
-            _messagesLock = new object();
-        }
-
-        public void update()
-        {
-            Message message = _clientSocketHandler.DequeueFromMessages();
-       
-            if (message != null)
-            {
-                MessageReceived?.Invoke(message);
-            }
-        }
-
-        public void ConnectToServer()
-        {
-            try
-            {
-                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                _endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), _port);
-
-                _clientSocketHandler = new ClientSocketHandler();
-                _clientSocketHandler.SetLogger(_logger);
-                _clientSocketHandler.Socket = _socket;
-                _logger.Log(Logger.LogLevel.Info, "서버에 연결 요청 시작합니다.");
-                _clientSocketHandler.Socket.Connect(_endPoint);
-                _logger.Log(Logger.LogLevel.Info, "서버와 연결이 완료 되었습니다.");
-                _clientSocketHandler.OpenStream();
-                _clientSocketHandler.SetMessageQueue(_messages);
-                _clientSocketHandler.SetLockObject(_messagesLock);
-                _clientSocketHandler.SetKeepAlive();
-                _clientSocketHandler.StartToReceive();
-                _clientSocketHandler.SetObserver(Instance);
-            }
-            catch (IOException e)
-            {
-                _logger.Log(Logger.LogLevel.Error, e.ToString());
-            }
-        }
-
-        
-
-        public void SetGameRoomRepository(string jsonString)
-        {
-            _gameRoomRepository.ConvertToRoomList(jsonString);
-        }
-
-        public GameRoomRepository GetGameRoomRepository() 
-        { 
-            return _gameRoomRepository; 
-        }
-
-        public void DisConnectToServer()
-        {
-            _clientSocketHandler.Disconnect();
-        }
-
-        public void SendToServer(Func<Message> delegateMessage)
-        {
-            Message message = delegateMessage();
-            string data = _clientSocketHandler.CreateTheData(message);
-            _clientSocketHandler.Send(data);
-        }
-
-        public string GetClientName()
-        {
-            return _clientSocketHandler.Name;
-        }
-
-        public UserRepository GetUserRepository()
-        {
-            return this._userRepository;
         }
     }
 }

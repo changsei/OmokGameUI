@@ -1,6 +1,4 @@
-﻿using Form_Repository;
-using Forms_Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Message = Forms_Model.Message;
+using Message = Model.Message;
+using Model;
+using Socket_Handler;
 
 namespace Game_Client_Forms
 {

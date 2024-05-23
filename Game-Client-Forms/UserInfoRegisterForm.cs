@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Forms_Model;
-using Message = Forms_Model.Message;
+using Model;
+using Socket_Handler;
+using Message = Model.Message;
 
 namespace Game_Client_Forms
 {

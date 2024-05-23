@@ -14,14 +14,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Form-Repository">
-      <HintPath>..\..\Form-Repository\Form-Repository\bin\Debug\net8.0-windows\Form-Repository.dll</HintPath>
+    <ProjectReference Include="..\Repository\Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Model">
+      <HintPath>..\Model\bin\Debug\net8.0-windows\Model.dll</HintPath>
     </Reference>
-    <Reference Include="Forms-Model">
-      <HintPath>..\..\Forms-Model\Forms-Model\bin\Debug\net8.0-windows\Forms-Model.dll</HintPath>
+    <Reference Include="Omok-Game">
+      <HintPath>..\Omok-Game\bin\Debug\net8.0-windows\Omok-Game.dll</HintPath>
     </Reference>
-    <Reference Include="Socket-Handler-Form">
-      <HintPath>..\Game-Client-Forms-dll\Debug\net8.0-windows\Socket-Handler-Form.dll</HintPath>
+    <Reference Include="Socket-Handler">
+      <HintPath>..\Socket-Handler\bin\Debug\net8.0-windows\Socket-Handler.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿using Forms_Model;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Message = Forms_Model.Message;
+using Model;
+using Socket_Handler;
+using Message = Model.Message;
 
 namespace Game_Client_Forms
 {
@@ -96,6 +98,12 @@ namespace Game_Client_Forms
                     lblGuide.Text = "비밀번호 입력이 필요합니다.";
                     return;
                 }
+            }
+
+            if (!isUserIdFilled )
+            {
+                lblGuide.Text = "계정 입력이 필요합니다.";
+                btnUnregister.Enabled = false;
             }
         }
     }

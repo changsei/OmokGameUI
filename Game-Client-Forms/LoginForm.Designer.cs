@@ -1,4 +1,4 @@
-﻿using Socket_Handler_Form;
+﻿using Socket_Handler;
 using System.Diagnostics;
 
 namespace Game_Client_Forms
@@ -45,12 +45,12 @@ namespace Game_Client_Forms
             // 
             // btnLogin
             // 
+            btnLogin.Enabled = false;
             btnLogin.Location = new Point(318, 370);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(106, 71);
             btnLogin.TabIndex = 0;
             btnLogin.Text = "Login";
-            btnLogin.Enabled = false;
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 
@@ -109,7 +109,7 @@ namespace Game_Client_Forms
             tBoxUserPassword.PasswordChar = '*';
             tBoxUserPassword.Size = new Size(278, 31);
             tBoxUserPassword.TabIndex = 10;
-            tBoxUserPassword.TextChanged += tBoxUserPassword_TextChanged;
+            tBoxUserPassword.TextChanged += tBoxUserId_TextChanged;
             // 
             // pnlLogo
             // 
