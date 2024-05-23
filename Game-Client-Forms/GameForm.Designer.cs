@@ -222,15 +222,14 @@
             // 
             // GameForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1258, 664);
             Controls.Add(lblLogo);
             Controls.Add(pnlGameBoard);
             Controls.Add(pnlLog);
             Controls.Add(pnlUserStatus);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "GameForm";
             Text = "GameForm";
             Load += GameForm_Load;

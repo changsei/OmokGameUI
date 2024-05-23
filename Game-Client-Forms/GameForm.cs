@@ -15,7 +15,6 @@ using Omok_Game;
 using Model;
 using Socket_Handler;
 using Message = Model.Message;
-using static Omok_Game.OmokGameHandler;
 
 namespace Game_Client_Forms
 {
@@ -30,10 +29,10 @@ namespace Game_Client_Forms
         private Graphics _graphics;
         private Pen _pen;
         private Brush _whiteBrush, _blackBrush;
-        private int _margin = 40;
-        private int _gridSize = 30;
-        private int _stoneSize = 25;
-        private int _flowerSize = 10;
+        private int _margin = 0;
+        private int _gridSize = 0;
+        private int _stoneSize = 0;
+        private int _flowerSize = 0;
 
         public GameForm()
         {
@@ -77,7 +76,7 @@ namespace Game_Client_Forms
         // 오목 로직 관련
         // 그래픽
 
-        public void DrawStonOnBoard(int x, int y)
+        public void ProcessDrawStoneResponse(int x, int y)
         {
             Rectangle rectangleForDraw = new Rectangle(
             _margin + _gridSize * x - _stoneSize / 2,
@@ -126,6 +125,7 @@ namespace Game_Client_Forms
 
         private void pnlGameBoard_Paint(object sender, PaintEventArgs e)
         {
+            AdjustDrawingSettings(e.Graphics, pnlGameBoard.Width, pnlGameBoard.Height);
             Invoke((MethodInvoker)((() => DrawBoard())));
             Invoke((MethodInvoker)((() => RedrawStones())));
         }
@@ -159,6 +159,16 @@ namespace Game_Client_Forms
             }
         }
 
+        private void AdjustDrawingSettings(Graphics graphics, int width, int height)
+        {
+            float dpiScale = graphics.DpiX / 96.0f; // 기본 DPI가 96인 경우
+            int minSize = Math.Min(width, height);  // 패널의 최소 크기
+            _margin = Math.Max(20, (int)(20 * dpiScale));
+            _gridSize = (minSize - (_margin * 2)) / 18;
+            _stoneSize = (int)(_gridSize * 0.8);
+            _flowerSize = (int)(_gridSize * 0.25);
+        }
+
         private void InitializeGrapicTools()
         {
             pnlGameBoard.BackColor = Color.SandyBrown;
@@ -166,7 +176,7 @@ namespace Game_Client_Forms
             _blackBrush = new SolidBrush(Color.Black);
             _whiteBrush = new SolidBrush(Color.White);
         }
-        
+
         // 그래픽 
 
         private void GameForm_Load(object sender, EventArgs e)

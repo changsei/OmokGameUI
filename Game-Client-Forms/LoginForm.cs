@@ -335,7 +335,7 @@ namespace Game_Client_Forms
         private void ProcessMoveStoneResponse(string text)
         {
             GameMove gameMove = _client.GetGameRoomRepository().ConvertJsonToGameMove(text);
-            _gameform.DrawStonOnBoard(gameMove.X, gameMove.Y);
+            _gameform.ProcessDrawStoneResponse(gameMove.X, gameMove.Y);
         }
 
         private void ProcessSearchPasswordRespnose()

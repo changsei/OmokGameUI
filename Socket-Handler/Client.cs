@@ -22,6 +22,7 @@ namespace Socket_Handler
         private Socket _socket;
         private IPEndPoint _endPoint;
         private int _port;
+        private string _ip;
         private Logger _logger;
         private object _messagesLock;
 
@@ -44,7 +45,8 @@ namespace Socket_Handler
             _gameRoomRepository = new GameRoomRepository();
             _userRepository = new UserRepository();
             _messages = new Queue<Message>();
-            _port = 8080;
+            _port = 50000;
+            _ip = "223.130.152.245";
             _messagesLock = new object();
         }
 
@@ -63,7 +65,7 @@ namespace Socket_Handler
             try
             {
                 _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                _endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), _port);
+                _endPoint = new IPEndPoint(IPAddress.Parse(_ip), _port);
 
                 _clientSocketHandler = new ClientSocketHandler();
                 _clientSocketHandler.SetLogger(_logger);
