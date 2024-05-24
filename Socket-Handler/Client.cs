@@ -45,8 +45,10 @@ namespace Socket_Handler
             _gameRoomRepository = new GameRoomRepository();
             _userRepository = new UserRepository();
             _messages = new Queue<Message>();
-            _port = 50000;
-            _ip = "223.130.152.245";
+            _port = 8080;
+            // 50000
+            // 223.130.152.245
+            _ip = "127.0.0.1";
             _messagesLock = new object();
         }
 

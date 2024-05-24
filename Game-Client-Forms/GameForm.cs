@@ -301,6 +301,7 @@ namespace Game_Client_Forms
         {
             this._currentRoom = room;
             this.ShowGameRoomUserInfo();
+            Console.WriteLine($"{room.SubUserReady} : {room.MainUserReady}");
             _gameHandler.RegistUserTurn(CheckMainOrSubUerByClientName());
 
             if (_currentRoom.CheckReadyToStart())

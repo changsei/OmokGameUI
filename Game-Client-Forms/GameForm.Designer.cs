@@ -53,7 +53,7 @@
             // 
             lblLogo.AutoSize = true;
             lblLogo.Font = new Font("맑은 고딕", 8F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            lblLogo.Location = new Point(579, 633);
+            lblLogo.Location = new Point(580, 619);
             lblLogo.Name = "lblLogo";
             lblLogo.Size = new Size(109, 21);
             lblLogo.TabIndex = 27;
@@ -64,7 +64,7 @@
             pnlGameBoard.BorderStyle = BorderStyle.FixedSingle;
             pnlGameBoard.Location = new Point(34, 16);
             pnlGameBoard.Name = "pnlGameBoard";
-            pnlGameBoard.Size = new Size(641, 612);
+            pnlGameBoard.Size = new Size(600, 600);
             pnlGameBoard.TabIndex = 24;
             pnlGameBoard.Paint += pnlGameBoard_Paint;
             pnlGameBoard.MouseDown += pnlGameBoard_MouseDown;
@@ -76,9 +76,9 @@
             pnlLog.Controls.Add(btnInputUserChat);
             pnlLog.Controls.Add(tBoxUserChat);
             pnlLog.Controls.Add(richBoxUserChatLog);
-            pnlLog.Location = new Point(694, 200);
+            pnlLog.Location = new Point(668, 188);
             pnlLog.Name = "pnlLog";
-            pnlLog.Size = new Size(537, 428);
+            pnlLog.Size = new Size(563, 428);
             pnlLog.TabIndex = 23;
             // 
             // richBoxGameLog
@@ -131,9 +131,9 @@
             pnlUserStatus.Controls.Add(btnBackward);
             pnlUserStatus.Controls.Add(btnSurrender);
             pnlUserStatus.Controls.Add(btnReady);
-            pnlUserStatus.Location = new Point(694, 16);
+            pnlUserStatus.Location = new Point(668, 16);
             pnlUserStatus.Name = "pnlUserStatus";
-            pnlUserStatus.Size = new Size(537, 163);
+            pnlUserStatus.Size = new Size(563, 163);
             pnlUserStatus.TabIndex = 22;
             // 
             // lblSubUserReady
