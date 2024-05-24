@@ -29,4 +29,5 @@ C# WINDOWS FORM 을 활용한 간단한 오목 게임 UI 입니다.
 보안사항
 - 오목 예외 로직 필요
 - 콘솔에서 출력되는 메시지를 UI상에서 출력
-- 게임 진행시 턴 알림 기능 필요  
+- 게임 진행시 턴 알림 기능 필요
+- 서버 코드 https://github.com/changsei/OmokGameServer/tree/master
